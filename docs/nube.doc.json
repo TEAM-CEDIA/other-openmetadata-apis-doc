@@ -1,0 +1,237 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "NUBE API — nube-maquinas (fragmento OpenMetadata)",
+    "description": "Inventario VM multi-hypervisor — DAG `3_0_nube_maquinas` → Silver `dt_nube_data`.\n\n## Fuentes (IP + estado en ETL)\n\n| Fuente | Variable IP | IP | Estado ETL |\n|--------|-------------|-----|------------|\n| `vmware_int` | `NUBE_VMWAREINT_IP` | **10.30.1.1** | **INACTIVO** |\n| `gye` | `NUBE_NUTANIX_IP_GYE` | **192.168.200.51** | **ACTIVO** |\n| `vmware` | `NUBE_VMWARE_IP` | **192.168.200.79** | **ACTIVO** |\n| `vmware_temp` | `NUBE_VMWARE_IP_TEMP` | **192.168.205.250** | **ACTIVO** |\n| `vmware_vcf9int` | `NUBE_VMWARE_VCF9INT_IP` | **10.30.7.1** | **ACTIVO** |\n\nEstado = `enabled` en registro `NUBE_SOURCES` / default `config.py`. Paths canónicos OM (no URL Prism/vCloud).",
+    "version": "1.1.0",
+    "x-cedia-doc-kind": "nube-openmetadata-fragment",
+    "x-cedia-dag": "3_0_nube_maquinas",
+    "x-cedia-silver-table": "dt_nube_data"
+  },
+  "servers": [
+    {
+      "url": "https://nube.cedia.edu.ec",
+      "description": "Documental — hiperactores Nube CEDIA (ver IPs por endpoint)"
+    },
+    {
+      "url": "https://10.30.1.1",
+      "description": "[INACTIVO] VMware INT — NUBE_VMWAREINT_IP=10.30.1.1"
+    },
+    {
+      "url": "https://192.168.200.51:9440",
+      "description": "[ACTIVO] Nutanix GYE — NUBE_NUTANIX_IP_GYE=192.168.200.51"
+    },
+    {
+      "url": "https://192.168.200.79",
+      "description": "[ACTIVO] VMware principal — NUBE_VMWARE_IP=192.168.200.79"
+    },
+    {
+      "url": "https://192.168.205.250",
+      "description": "[ACTIVO] VMware TEMP — NUBE_VMWARE_IP_TEMP=192.168.205.250"
+    },
+    {
+      "url": "https://10.30.7.1",
+      "description": "[ACTIVO] VMware VCF9 INT — NUBE_VMWARE_VCF9INT_IP=10.30.7.1"
+    }
+  ],
+  "tags": [
+    {
+      "name": "NUBE-MAQUINAS",
+      "description": "Inventario de VMs multi-hypervisor. DAG: 3_0_nube_maquinas.\n\n**IPs / estado:** INT 10.30.1.1 INACTIVO · GYE 192.168.200.51 ACTIVO · VMware 192.168.200.79 ACTIVO · TEMP 192.168.205.250 ACTIVO · VCF9INT 10.30.7.1 ACTIVO."
+    }
+  ],
+  "paths": {
+    "/vmware-int/vms": {
+      "get": {
+        "tags": ["NUBE-MAQUINAS"],
+        "summary": "[INACTIVO] VMware INT — IP 10.30.1.1",
+        "description": "## Conexión\n- **Estado ETL:** INACTIVO (`enabled=false`)\n- **IP:** `10.30.1.1`\n- **Variable IP:** `NUBE_VMWAREINT_IP`\n- **Credenciales:** `NUBE_VMWAREINT_USER` / `NUBE_VMWAREINT_PASS`\n\n## Fuente\n- **id:** `vmware_int`\n- **label / source:** `VMsVmwareInt`\n- **kind:** `vmware_int` (vCenter REST / resource pools)\n\nCampos loader: id, name, guest_OS, cpu_cores, ram_gb, disk_capacity_gb, disk_used_gb, tenant, power_state, source.",
+        "operationId": "getVmwareIntVms",
+        "responses": {
+          "200": {
+            "description": "Listado de VMs",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/NubeVmRecord" }
+                }
+              }
+            }
+          },
+          "401": { "description": "No autenticado" }
+        },
+        "x-cedia-dag": "3_0_nube_maquinas",
+        "x-cedia-source-id": "vmware_int",
+        "x-cedia-source-file": "3_0_nube_maquinas/nube-maquinas-open.json",
+        "x-cedia-silver-table": "dt_nube_data",
+        "x-cedia-path": "/vmware-int/vms",
+        "x-cedia-host-ip": "10.30.1.1",
+        "x-cedia-ip-variable": "NUBE_VMWAREINT_IP",
+        "x-cedia-source-enabled": false,
+        "x-cedia-connection-status": "INACTIVO"
+      }
+    },
+    "/nutanix-gye/vms": {
+      "get": {
+        "tags": ["NUBE-MAQUINAS"],
+        "summary": "[ACTIVO] Nutanix GYE — IP 192.168.200.51",
+        "description": "## Conexión\n- **Estado ETL:** ACTIVO (`enabled=true`)\n- **IP:** `192.168.200.51`\n- **Variable IP:** `NUBE_NUTANIX_IP_GYE`\n- **Credenciales:** `NUBE_NUTANIX_USER` / `NUBE_NUTANIX_PASS`\n- **Puerto Prism:** 9440\n\n## Fuente\n- **id:** `gye`\n- **label / source:** `VMsNutanixGYE`\n- **kind:** `nutanix_gye` (Prism REST v1 `/vms`)",
+        "operationId": "getNutanixGyeVms",
+        "responses": {
+          "200": {
+            "description": "Listado de VMs",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/NubeVmRecord" }
+                }
+              }
+            }
+          },
+          "401": { "description": "No autenticado" }
+        },
+        "x-cedia-dag": "3_0_nube_maquinas",
+        "x-cedia-source-id": "gye",
+        "x-cedia-source-file": "3_0_nube_maquinas/nube-maquinas-open.json",
+        "x-cedia-silver-table": "dt_nube_data",
+        "x-cedia-path": "/nutanix-gye/vms",
+        "x-cedia-host-ip": "192.168.200.51",
+        "x-cedia-ip-variable": "NUBE_NUTANIX_IP_GYE",
+        "x-cedia-source-enabled": true,
+        "x-cedia-connection-status": "ACTIVO"
+      }
+    },
+    "/vmware/vms": {
+      "get": {
+        "tags": ["NUBE-MAQUINAS"],
+        "summary": "[ACTIVO] VMware principal — IP 192.168.200.79",
+        "description": "## Conexión\n- **Estado ETL:** ACTIVO (`enabled=true`)\n- **IP:** `192.168.200.79`\n- **Variable IP:** `NUBE_VMWARE_IP`\n- **Credenciales:** `NUBE_VMWARE_USER` / `NUBE_VMWARE_PASS`\n\n## Fuente\n- **id:** `vmware`\n- **label / source:** `VMsVmware`\n- **kind:** `vmware` (vCenter REST / resource pools)",
+        "operationId": "getVmwareVms",
+        "responses": {
+          "200": {
+            "description": "Listado de VMs",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/NubeVmRecord" }
+                }
+              }
+            }
+          },
+          "401": { "description": "No autenticado" }
+        },
+        "x-cedia-dag": "3_0_nube_maquinas",
+        "x-cedia-source-id": "vmware",
+        "x-cedia-source-file": "3_0_nube_maquinas/nube-maquinas-open.json",
+        "x-cedia-silver-table": "dt_nube_data",
+        "x-cedia-path": "/vmware/vms",
+        "x-cedia-host-ip": "192.168.200.79",
+        "x-cedia-ip-variable": "NUBE_VMWARE_IP",
+        "x-cedia-source-enabled": true,
+        "x-cedia-connection-status": "ACTIVO"
+      }
+    },
+    "/vmware-temp/vms": {
+      "get": {
+        "tags": ["NUBE-MAQUINAS"],
+        "summary": "[ACTIVO] VMware TEMP — IP 192.168.205.250",
+        "description": "## Conexión\n- **Estado ETL:** ACTIVO (`enabled=true`)\n- **IP:** `192.168.205.250`\n- **Variable IP:** `NUBE_VMWARE_IP_TEMP`\n- **Credenciales:** `NUBE_VMWARE_USER_TEMP` / `NUBE_VMWARE_PASS_TEMP`\n\n## Fuente\n- **id:** `vmware_temp`\n- **label / source:** `VMsVmwareTemp`\n- **kind:** `vmware_temp` (vCenter REST / resource pools)",
+        "operationId": "getVmwareTempVms",
+        "responses": {
+          "200": {
+            "description": "Listado de VMs",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/NubeVmRecord" }
+                }
+              }
+            }
+          },
+          "401": { "description": "No autenticado" }
+        },
+        "x-cedia-dag": "3_0_nube_maquinas",
+        "x-cedia-source-id": "vmware_temp",
+        "x-cedia-source-file": "3_0_nube_maquinas/nube-maquinas-open.json",
+        "x-cedia-silver-table": "dt_nube_data",
+        "x-cedia-path": "/vmware-temp/vms",
+        "x-cedia-host-ip": "192.168.205.250",
+        "x-cedia-ip-variable": "NUBE_VMWARE_IP_TEMP",
+        "x-cedia-source-enabled": true,
+        "x-cedia-connection-status": "ACTIVO"
+      }
+    },
+    "/vmware-vcf9int/vms": {
+      "get": {
+        "tags": ["NUBE-MAQUINAS"],
+        "summary": "[ACTIVO] VMware VCF9 INT — IP 10.30.7.1",
+        "description": "## Conexión\n- **Estado ETL:** ACTIVO (`enabled=true`)\n- **IP:** `10.30.7.1`\n- **Variable IP:** `NUBE_VMWARE_VCF9INT_IP`\n- **Credenciales:** `NUBE_VMWARE_VCF9INT_USER` / `NUBE_VMWARE_VCF9INT_PASS`\n\n## Fuente\n- **id:** `vmware_vcf9int`\n- **label / source:** `VMsVmwareVcf9Int`\n- **kind:** `vmware_vcf9int` (vCenter REST / resource pools, mismo flujo que `vmware`)",
+        "operationId": "getVmwareVcf9IntVms",
+        "responses": {
+          "200": {
+            "description": "Listado de VMs",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/NubeVmRecord" }
+                }
+              }
+            }
+          },
+          "401": { "description": "No autenticado" }
+        },
+        "x-cedia-dag": "3_0_nube_maquinas",
+        "x-cedia-source-id": "vmware_vcf9int",
+        "x-cedia-source-file": "3_0_nube_maquinas/nube-maquinas-open.json",
+        "x-cedia-silver-table": "dt_nube_data",
+        "x-cedia-path": "/vmware-vcf9int/vms",
+        "x-cedia-host-ip": "10.30.7.1",
+        "x-cedia-ip-variable": "NUBE_VMWARE_VCF9INT_IP",
+        "x-cedia-source-enabled": true,
+        "x-cedia-connection-status": "ACTIVO"
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "NubeVmRecord": {
+        "type": "object",
+        "description": "Fila normalizada por HypervisorDataCollector antes del enrich.",
+        "properties": {
+          "id": { "type": "string", "description": "UUID / ID VM" },
+          "name": { "type": "string", "description": "Nombre del recurso VM" },
+          "guest_OS": { "type": "string" },
+          "cpu_cores": { "type": "integer" },
+          "ram_gb": { "type": "number" },
+          "disk_capacity_gb": { "type": "number" },
+          "disk_used_gb": { "type": "number" },
+          "tenant": { "type": "string" },
+          "power_state": {
+            "type": "string",
+            "enum": ["on", "off"]
+          },
+          "source": {
+            "type": "string",
+            "description": "Tag de fuente (VMsNutanixGYE, VMsVmware, …)"
+          },
+          "institution": {
+            "type": "string",
+            "description": "Institución si el collector la aporta"
+          },
+          "resource_pool_name": {
+            "type": "string",
+            "description": "Pool (research / VCloud)"
+          },
+          "Type": { "type": "string" },
+          "TYPESRV": { "type": "string" }
+        },
+        "required": ["id", "name", "source"]
+      }
+    }
+  }
+}
