@@ -1,0 +1,106 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "REDI API — universities statistics (fragmento OpenMetadata)",
+    "description": "Endpoint HTTP consumido por el DAG 6_4_redi (migración Pentaho 31-REDI.ktr).\n\nEl loader proyecta uc:name, uc:totalAuthors.@value y uc:totalPublications.@value desde el JSON-LD @graph.",
+    "version": "1.0.0",
+    "x-cedia-doc-kind": "api-openmetadata-fragment",
+    "x-cedia-dag": "6_4_redi",
+    "x-cedia-silver-table": "dt_redi_data",
+    "x-cedia-loader-origin": "REDI"
+  },
+  "servers": [
+    {
+      "url": "https://redi.cedia.edu.ec",
+      "description": "Plataforma REDI (Variable REDI_STATISTICS_URL)"
+    }
+  ],
+  "tags": [
+    {
+      "name": "REDI",
+      "description": "Estadísticas por universidad. DAG: 6_4_redi."
+    }
+  ],
+  "paths": {
+    "/nest/universities/statistics": {
+      "get": {
+        "tags": ["REDI"],
+        "summary": "Estadísticas de universidades REDI",
+        "description": "Respuesta JSON-LD con @graph. El ETL usa uc:name como alias de lookup (código corto) y los conteos @value de autores/publicaciones.",
+        "operationId": "getRediUniversitiesStatistics",
+        "responses": {
+          "200": {
+            "description": "Documento JSON-LD de estadísticas.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/RediStatisticsResponse" }
+              }
+            }
+          }
+        },
+        "x-cedia-dag": "6_4_redi",
+        "x-cedia-source-file": "6_4_redi/redi-open.json",
+        "x-cedia-silver-table": "dt_redi_data"
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "RediStatisticsResponse": {
+        "type": "object",
+        "required": ["@graph"],
+        "properties": {
+          "_id": { "type": "string" },
+          "@graph": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/RediUniversityStat" }
+          }
+        }
+      },
+      "RediUniversityStat": {
+        "type": "object",
+        "properties": {
+          "@id": { "type": "string" },
+          "uc:name": {
+            "type": "string",
+            "description": "Código universidad (lookup CMI). Ej. UG, ESPOL."
+          },
+          "uc:figure": {
+            "type": "object",
+            "properties": {
+              "@language": { "type": "string" },
+              "@value": { "type": "string", "description": "Nombre largo (auditoría)." }
+            }
+          },
+          "uc:totalAuthors": { "$ref": "#/components/schemas/JsonLdInteger" },
+          "uc:totalPublications": { "$ref": "#/components/schemas/JsonLdInteger" }
+        }
+      },
+      "JsonLdInteger": {
+        "type": "object",
+        "properties": {
+          "@type": { "type": "string" },
+          "@value": { "type": "string", "description": "Entero como string JSON-LD." }
+        }
+      },
+      "RediRawRecord": {
+        "type": "object",
+        "description": "Fila Bronze pending/raw.jsonl",
+        "required": ["redi_universidad", "redi_numautores", "redi_numpublicaciones"],
+        "properties": {
+          "redi_universidad": { "type": "string" },
+          "redi_universidad_nombre": { "type": "string" },
+          "redi_numautores": { "type": "integer" },
+          "redi_numpublicaciones": { "type": "integer" }
+        }
+      }
+    }
+  },
+  "x-cedia-dag": "6_4_redi",
+  "x-cedia-fragment": "6_4_redi/redi-open.json",
+  "x-cedia-path": "/nest/universities/statistics",
+  "x-cedia-silver-table": "dt_redi_data",
+  "x-cedia-om-api-endpoint-fqn-hint": "REDI API.nest./nest/universities/statistics",
+  "x-cedia-om-source-fqn": "REDI API.nest./nest/universities/statistics",
+  "x-cedia-om-dest-fqn": "TIC CMI DB.CMI.cedia-ps.dt_redi_data"
+}

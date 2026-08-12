@@ -1,0 +1,429 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "SIC API — CMI ETL (OpenMetadata)",
+    "description": "Contrato consolidado de los recursos SIC consumidos por los DAGs Airflow del repositorio CMI.\n\nCada ETL con origen SIC mantiene un fragmento `*-open.json` en su carpeta; este documento se regenera con `sic_doc_open/rebuild_sic_doc_openmeta.py` para servir un único OpenAPI a OpenMetadata.\n\nLos esquemas documentan únicamente los campos proyectados por cada loader (no el payload completo de SIC).\n\nGenerado: 2026-08-04\n\nDAGs incluidos:\n- `1_2_lan_extendida` → `/lan-extendidas`\n- `3_3_backup_servicio_estado` → `/backup-como-servicios`\n- `6_2_roa` → `/roas`",
+    "version": "1.0.0",
+    "contact": {
+      "name": "Equipo de datos CMI",
+      "email": "darwin.calle@cedia.org.ec"
+    },
+    "x-cedia-doc-kind": "sic-openmetadata-aggregate",
+    "x-cedia-rebuild": "sic_doc_open/rebuild_sic_doc_openmeta.py",
+    "x-cedia-generated-at": "2026-08-04"
+  },
+  "servers": [
+    {
+      "url": "https://sic.cedia.edu.ec",
+      "description": "Plataforma SIC"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Autenticación",
+      "description": "Obtención de JWT usado por los loaders SIC."
+    },
+    {
+      "name": "LAN extendida",
+      "description": "Servicio LAN extendida obtenido desde SIC. DAG: 1_2_lan_extendida."
+    },
+    {
+      "name": "Backup como Servicio",
+      "description": "Estado del servicio de Backup obtenido desde SIC. DAG: 3_3_backup_servicio_estado."
+    },
+    {
+      "name": "ROA",
+      "description": "Repositorio de Objetos de Aprendizaje (ROA). DAG: 6_2_roa."
+    }
+  ],
+  "paths": {
+    "/auth/local": {
+      "post": {
+        "tags": [
+          "Autenticación"
+        ],
+        "summary": "Autenticar y obtener JWT",
+        "description": "Endpoint usado por `libs.sic.Sic.authorizate()`. Credenciales desde Variables Airflow `SIC_USER_WEB` / `SIC_PASS_WEB`.",
+        "operationId": "postAuthLocal",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SicAuthRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Autenticación exitosa; incluye JWT.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SicAuthResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Credenciales inválidas o cuerpo mal formado."
+          },
+          "401": {
+            "description": "No autorizado."
+          }
+        },
+        "x-cedia-dags": [
+          "1_2_lan_extendida",
+          "3_3_backup_servicio_estado",
+          "6_2_roa"
+        ]
+      }
+    },
+    "/lan-extendidas": {
+      "get": {
+        "tags": [
+          "LAN extendida"
+        ],
+        "summary": "Obtener registros de LAN extendida",
+        "description": "Consulta utilizada por el ETL. El loader conserva únicamente fecha_activacion, institucion, descripcion, activado y cantidad_sedes.",
+        "operationId": "getLanExtendidas",
+        "parameters": [
+          {
+            "name": "_limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 100000,
+              "minimum": 1
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Listado de LAN extendida con los campos consumidos por el ETL.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/LanExtendida"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No autenticado"
+          }
+        },
+        "x-cedia-dag": "1_2_lan_extendida",
+        "x-cedia-source-file": "1_2_lan_extendida/lan-extendida-open.json",
+        "x-cedia-silver-table": "dt_lan_extendida_data"
+      }
+    },
+    "/backup-como-servicios": {
+      "get": {
+        "tags": [
+          "Backup como Servicio"
+        ],
+        "summary": "Obtener estados de Backup como Servicio",
+        "description": "Consulta utilizada por el ETL. El loader conserva únicamente fecha_activacion, institucion, maquinas_virtuales_desplegadas, activo, almacenamiento_usado y puntos_usados.",
+        "operationId": "getBackupComoServicios",
+        "parameters": [
+          {
+            "name": "_limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 100000,
+              "minimum": 1
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Listado de estados de Backup como Servicio.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BackupServicioEstado"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token JWT ausente, inválido o expirado."
+          }
+        },
+        "x-cedia-dag": "3_3_backup_servicio_estado",
+        "x-cedia-source-file": "3_3_backup_servicio_estado/backup-estado-open.json",
+        "x-cedia-silver-table": "dt_baas_data"
+      }
+    },
+    "/roas": {
+      "get": {
+        "tags": [
+          "ROA"
+        ],
+        "summary": "Obtener registros ROA",
+        "description": "Consulta utilizada por el ETL. El loader conserva únicamente fecha_activacion, numero_de_objetos_apre e institucion. SIC puede entregar institucion como objeto; el process normaliza a nombre (string).",
+        "operationId": "getRoas",
+        "parameters": [
+          {
+            "name": "_limit",
+            "in": "query",
+            "description": "Cantidad máxima de registros solicitada por el loader.",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 100000,
+              "minimum": 1
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Listado ROA con los campos consumidos por el ETL.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Roa"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No autenticado"
+          }
+        },
+        "x-cedia-dag": "6_2_roa",
+        "x-cedia-source-file": "6_2_roa/roa-open.json",
+        "x-cedia-silver-table": "dt_roa_data"
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "description": "JWT obtenido mediante POST /auth/local. Variables Airflow SIC_USER_WEB / SIC_PASS_WEB."
+      }
+    },
+    "schemas": {
+      "SicAuthRequest": {
+        "type": "object",
+        "required": [
+          "identifier",
+          "password"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "identifier": {
+            "type": "string",
+            "description": "Usuario SIC (Variable Airflow SIC_USER_WEB)."
+          },
+          "password": {
+            "type": "string",
+            "format": "password",
+            "description": "Contraseña SIC (Variable Airflow SIC_PASS_WEB)."
+          }
+        }
+      },
+      "SicAuthResponse": {
+        "type": "object",
+        "properties": {
+          "jwt": {
+            "type": "string",
+            "description": "Token Bearer para llamadas posteriores a recursos SIC."
+          },
+          "user": {
+            "type": "object",
+            "description": "Metadatos del usuario autenticado.",
+            "additionalProperties": true
+          }
+        }
+      },
+      "LanExtendida": {
+        "type": "object",
+        "required": [
+          "fecha_activacion",
+          "institucion"
+        ],
+        "properties": {
+          "fecha_activacion": {
+            "type": "string",
+            "format": "date",
+            "description": "Fecha de activación del servicio."
+          },
+          "institucion": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "nombre": {
+                    "type": "string"
+                  }
+                }
+              }
+            ],
+            "description": "Institución; el ETL normaliza objeto.nombre a string."
+          },
+          "descripcion": {
+            "type": "string",
+            "maxLength": 512
+          },
+          "activado": {
+            "oneOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "integer"
+              },
+              {
+                "type": "string"
+              }
+            ]
+          },
+          "cantidad_sedes": {
+            "oneOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "string"
+              }
+            ]
+          }
+        }
+      },
+      "BackupServicioEstado": {
+        "type": "object",
+        "description": "Proyección de campos SIC del DAG 3_3_backup_servicio_estado.",
+        "additionalProperties": false,
+        "properties": {
+          "fecha_activacion": {
+            "type": "string",
+            "format": "date",
+            "nullable": true
+          },
+          "institucion": {
+            "type": "string",
+            "nullable": true,
+            "description": "Nombre de institución (SIC institucion.nombre normalizado)."
+          },
+          "maquinas_virtuales_desplegadas": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "activo": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "almacenamiento_usado": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "puntos_usados": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          }
+        }
+      },
+      "Roa": {
+        "type": "object",
+        "description": "Proyección de campos SIC que consume el DAG 6_2_roa.",
+        "required": [
+          "fecha_activacion",
+          "institucion"
+        ],
+        "properties": {
+          "fecha_activacion": {
+            "type": "string",
+            "format": "date",
+            "nullable": true,
+            "description": "Fecha de activación; se usa para derivar roa_anio, roa_mes, roa_dia."
+          },
+          "numero_de_objetos_apre": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true,
+            "description": "Número de objetos de aprendizaje."
+          },
+          "institucion": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "nombre": {
+                    "type": "string"
+                  }
+                }
+              }
+            ],
+            "nullable": true,
+            "description": "Institución; el ETL normaliza objeto.nombre a string para lookup CMI."
+          }
+        }
+      }
+    }
+  },
+  "x-cedia-sources": [
+    {
+      "dag": "1_2_lan_extendida",
+      "fragment": "1_2_lan_extendida/lan-extendida-open.json",
+      "path": "/lan-extendidas",
+      "silver_table": "dt_lan_extendida_data"
+    },
+    {
+      "dag": "3_3_backup_servicio_estado",
+      "fragment": "3_3_backup_servicio_estado/backup-estado-open.json",
+      "path": "/backup-como-servicios",
+      "silver_table": "dt_baas_data"
+    },
+    {
+      "dag": "6_2_roa",
+      "fragment": "6_2_roa/roa-open.json",
+      "path": "/roas",
+      "silver_table": "dt_roa_data"
+    }
+  ]
+}

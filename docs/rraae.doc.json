@@ -1,0 +1,161 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "RRAAE Solr — biblio (fragmento OpenMetadata)",
+    "description": "Contrato OpenAPI de los endpoints Solr consumidos por el DAG 6_3_rraae (migración Pentaho 32-RRAAE.ktr).\n\nEl loader consulta facet institution y, por cada institución, facet format. El dataset Bronze proyecta filas planas institucion_nombre + rraae_atributonombre + rraae_atributovalor.",
+    "version": "1.0.0",
+    "x-cedia-doc-kind": "api-openmetadata-fragment",
+    "x-cedia-dag": "6_3_rraae",
+    "x-cedia-silver-table": "dt_rraae_data",
+    "x-cedia-loader-origin": "RRAAE"
+  },
+  "servers": [
+    {
+      "url": "http://172.20.3.66:8983/solr/biblio",
+      "description": "Solr RRAAE biblio (Variable Airflow RRAAE_SOLR_BASE_URL; valor default del KTR)"
+    }
+  ],
+  "tags": [
+    {
+      "name": "RRAAE Solr",
+      "description": "Facets Solr del núcleo biblio. DAG: 6_3_rraae."
+    }
+  ],
+  "paths": {
+    "/select": {
+      "get": {
+        "tags": ["RRAAE Solr"],
+        "summary": "Consulta Solr select (facets institution / format)",
+        "description": "Operación única documentada para OpenMetadata (FQN hint: RRAAE Solr.biblio./select).\n\nEl ETL realiza dos usos:\n1) `facet.field=institution` — listado de instituciones.\n2) `facet.field=format` + `fq=institution:\"…\"` — conteos por tipo de documento de cada IES.\n\nRespuesta: XML Solr (`wt=xml`). El loader parsea facet_fields y emite el schema RraaeRawRecord.",
+        "operationId": "getRraaeSolrSelect",
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": true,
+            "schema": { "type": "string", "default": "*:*" },
+            "description": "Query Solr."
+          },
+          {
+            "name": "rows",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "integer", "default": 0 },
+            "description": "El ETL usa 0 (solo facets)."
+          },
+          {
+            "name": "wt",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "string", "default": "xml", "enum": ["xml"] }
+          },
+          {
+            "name": "facet",
+            "in": "query",
+            "required": true,
+            "schema": { "type": "boolean", "default": true }
+          },
+          {
+            "name": "facet.field",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": ["institution", "format"]
+            },
+            "description": "institution (paso 1) o format (paso 2)."
+          },
+          {
+            "name": "fq",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "string" },
+            "description": "Filtro opcional. Paso 2: institution:\"{nombre}\"."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "XML Solr con facet_counts / facet_fields.",
+            "content": {
+              "application/xml": {
+                "schema": {
+                  "type": "string",
+                  "description": "Documento XML Solr; el loader extrae int[@name] bajo el facet field."
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "description": "Proyección lógica del loader hacia Bronze (no es el payload Solr).",
+                  "items": { "$ref": "#/components/schemas/RraaeRawRecord" }
+                }
+              }
+            }
+          },
+          "500": { "description": "Error Solr / red" }
+        },
+        "x-cedia-dag": "6_3_rraae",
+        "x-cedia-source-file": "6_3_rraae/rraae-open.json",
+        "x-cedia-silver-table": "dt_rraae_data"
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "RraaeRawRecord": {
+        "type": "object",
+        "description": "Fila plana escrita en Bronze pending/raw.jsonl tras expandir facets.",
+        "required": [
+          "institucion_nombre",
+          "rraae_atributonombre",
+          "rraae_atributovalor"
+        ],
+        "properties": {
+          "institucion_nombre": {
+            "type": "string",
+            "description": "Nombre del facet institution (alias para lookup CMI)."
+          },
+          "rraae_atributonombre": {
+            "type": "string",
+            "description": "Código Solr format (p. ej. article, book). El process lo mapea a rraae_atributonom.",
+            "enum": [
+              "bachelorThesis",
+              "masterThesis",
+              "article",
+              "book",
+              "conferenceObject",
+              "doctoralThesis",
+              "other"
+            ]
+          },
+          "rraae_atributovalor": {
+            "type": "integer",
+            "description": "Conteo del facet format para esa institución."
+          }
+        }
+      },
+      "RraaeSilverRecord": {
+        "type": "object",
+        "description": "Proyección Silver dt_rraae_data (sin PK).",
+        "properties": {
+          "rraae_version": { "type": "integer" },
+          "rraae_datefrom": { "type": "string", "format": "date-time" },
+          "rraae_dateto": { "type": "string", "format": "date-time" },
+          "rraae_organization_id": { "type": "string" },
+          "rraae_atributonom": {
+            "type": "string",
+            "description": "Etiqueta ES (Tesis de grado, Artículo, …)."
+          },
+          "rraae_atributovalor": { "type": "integer" }
+        }
+      }
+    }
+  },
+  "x-cedia-dag": "6_3_rraae",
+  "x-cedia-fragment": "6_3_rraae/rraae-open.json",
+  "x-cedia-path": "/select",
+  "x-cedia-silver-table": "dt_rraae_data",
+  "x-cedia-om-api-endpoint-fqn-hint": "RRAAE Solr.biblio./select",
+  "x-cedia-om-source-fqn": "RRAAE Solr.biblio./select",
+  "x-cedia-om-dest-fqn": "TIC CMI DB.CMI.cedia-ps.dt_rraae_data"
+}

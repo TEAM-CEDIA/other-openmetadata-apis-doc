@@ -1,0 +1,115 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Eduroam FreeRADIUS Elasticsearch (fragmento OpenMetadata)",
+    "description": "Consulta ES consumida por el DAG 1_4_eduroam (migración Pentaho 03-EDUROAM_RAW.ktr).\n\nProyecta username, radius_client, timestamp, idsesion. El process anonimiza username con ANON_PERSON_SALT.",
+    "version": "1.0.0",
+    "x-cedia-doc-kind": "api-openmetadata-fragment",
+    "x-cedia-dag": "1_4_eduroam",
+    "x-cedia-silver-table": "dt_eduroam_data_raw",
+    "x-cedia-loader-origin": "ELASTICSEARCH"
+  },
+  "servers": [
+    {
+      "url": "http://172.20.3.32:9200",
+      "description": "Elasticsearch FreeRADIUS (Variable EDUROAM_ES_BASE_URL)"
+    }
+  ],
+  "tags": [
+    {
+      "name": "eduroam",
+      "description": "Login OK org-* freeradius. DAG: 1_4_eduroam."
+    }
+  ],
+  "paths": {
+    "/freeradius*/_search": {
+      "get": {
+        "tags": ["eduroam"],
+        "summary": "Buscar eventos Login OK eduroam",
+        "description": "Query Lucene con rango @timestamp. Campos _source: username, radius_client, timestamp, idsesion.",
+        "operationId": "searchEduroamFreeradius",
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": true,
+            "schema": { "type": "string" },
+            "description": "Login AND OK AND org- AND @timestamp:[from TO to]"
+          },
+          {
+            "name": "_source",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "default": "username,radius_client,timestamp,idsesion"
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "schema": { "type": "integer", "default": 900000 }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "schema": { "type": "string", "default": "@timestamp:asc" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Hits ES",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/EsSearchResponse" }
+              }
+            }
+          }
+        },
+        "x-cedia-dag": "1_4_eduroam",
+        "x-cedia-source-file": "1_4_eduroam/eduroam-open.json",
+        "x-cedia-silver-table": "dt_eduroam_data_raw"
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "EsSearchResponse": {
+        "type": "object",
+        "properties": {
+          "hits": {
+            "type": "object",
+            "properties": {
+              "hits": {
+                "type": "array",
+                "items": { "$ref": "#/components/schemas/EsHit" }
+              }
+            }
+          }
+        }
+      },
+      "EsHit": {
+        "type": "object",
+        "properties": {
+          "_source": { "$ref": "#/components/schemas/EduroamRawSource" }
+        }
+      },
+      "EduroamRawSource": {
+        "type": "object",
+        "properties": {
+          "username": { "type": "string", "description": "PII; anonimizado en process" },
+          "radius_client": { "type": "string" },
+          "timestamp": { "type": "string" },
+          "idsesion": { "type": "string" }
+        }
+      }
+    }
+  },
+  "x-cedia-dag": "1_4_eduroam",
+  "x-cedia-fragment": "1_4_eduroam/eduroam-open.json",
+  "x-cedia-path": "/freeradius*/_search",
+  "x-cedia-silver-table": "dt_eduroam_data_raw",
+  "x-cedia-om-api-endpoint-fqn-hint": "Eduroam ES.freeradius./freeradius*/_search",
+  "x-cedia-om-source-fqn": "Eduroam ES.freeradius./freeradius*/_search",
+  "x-cedia-om-dest-fqn": "TIC CMI DB.CMI.cedia-ps.dt_eduroam_data_raw",
+  "x-cedia-export-pattern": "PERIOD_YEAR_MONTH_DAY"
+}

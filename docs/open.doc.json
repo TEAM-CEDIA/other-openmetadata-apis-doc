@@ -1,0 +1,3324 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "SIC API — CMI ETL (OpenMetadata)",
+    "description": "Contrato consolidado de los recursos SIC consumidos por los DAGs Airflow del repositorio CMI.\n\nCada ETL con origen SIC mantiene un fragmento `*-open.json` en su carpeta; este documento se regenera con `sic_doc_open/rebuild_sic_doc_openmeta.py` para servir un único OpenAPI a OpenMetadata.\n\nLos esquemas documentan únicamente los campos proyectados por cada loader (no el payload completo de SIC).\n\nGenerado: 2026-08-11\n\nDAGs incluidos:\n- `0_diagnostico_cti` → `/diagnostico-asgs`\n- `1_0_red_avanzada_sedes` → `/red-avanzadas`\n- `1_2_lan_extendida` → `/lan-extendidas`\n- `1_3_tuneles_datos` → `/tunel-datos`\n- `1_4_eduroam` → `/freeradius*/_search`\n- `2_1_firewall_perimetral` → `/firewall-perimetrals`\n- `2_2_waf_estado` → `/firewall-sitios-webs`\n- `2_3_antiddos_activacion` → `/proteccion-denegacion-servicios`\n- `2_4_antispam` → `/antispams`\n- `2_5_dns_seguro_estatus` → `/dns-seguro-statuses`\n- `2_6_security_center` → `/security-centers`\n- `2_8_soc` → `/servicios-soc-csirts`\n- `3_3_backup_servicio_estado` → `/backup-como-servicios`\n- `3_4_backup_ejecutivo` → `/backup-ejecutivos`\n- `3_8_monitoreo_enlace` → `/monitoreo-enlace-infraestructuras`\n- `4_2_grabacion_eventos` → `/grabacion-eventos`\n- `4_4_repositorio_conocimiento` → `/repositorio-multimedias`\n- `5_1_llm` → `/elsas`\n- `5_1_moodle` → `/moodles`\n- `5_2_plataforma_mooc` → `/moocs-formacion-continuas`\n- `5_5_udecide` → `/udecides`\n- `5_6_venue` → `/venues`\n- `6_2_roa` → `/roas`\n- `6_3_rraae` → `/select`\n- `6_4_redi` → `/nest/universities/statistics`\n- `organization_paquete` → `/ies`\n- `packages_backup_servicio` → `/capacidad-paquetes`\n- `packages_cloud` → `/capacidad-paquete-clouds`\n- `packages_elsa` → `/capacidad-paquetes-elsa`\n- `packages_red_avanzada` → `/capacidad-paquetes-red-avanzada`\n- `packages_videoconferencia` → `/capacidad-paquetes-videoconferencia`",
+    "version": "1.0.0",
+    "contact": {
+      "name": "Equipo de datos CMI",
+      "email": "darwin.calle@cedia.org.ec"
+    },
+    "x-cedia-doc-kind": "sic-openmetadata-aggregate",
+    "x-cedia-rebuild": "sic_doc_open/rebuild_sic_doc_openmeta.py",
+    "x-cedia-generated-at": "2026-08-11"
+  },
+  "servers": [
+    {
+      "url": "https://sic.cedia.edu.ec",
+      "description": "Plataforma SIC"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Autenticación",
+      "description": "Obtención de JWT usado por los loaders SIC."
+    },
+    {
+      "name": "DIAGNOSTICO-CTI",
+      "description": "Recurso SIC `diagnostico-asgs`. DAG: 0_diagnostico_cti."
+    },
+    {
+      "name": "RED-AVANZADA-SEDES",
+      "description": "Recurso SIC `red-avanzadas`. DAG: 1_0_red_avanzada_sedes."
+    },
+    {
+      "name": "LAN-EXTENDIDA",
+      "description": "Servicio LAN extendida obtenido desde SIC. DAG: 1_2_lan_extendida."
+    },
+    {
+      "name": "TUNELES-DATOS",
+      "description": "Recurso SIC `tunel-datos`. DAG: 1_3_tuneles_datos. Nombre OM (mayúsculas, sin código numérico) usado en FQN apiEndpoint."
+    },
+    {
+      "name": "eduroam",
+      "description": "Login OK org-* freeradius. DAG: 1_4_eduroam."
+    },
+    {
+      "name": "FIREWALL-PERIMETRAL",
+      "description": "Recurso SIC `firewall-perimetrals`. DAG: 2_1_firewall_perimetral."
+    },
+    {
+      "name": "WAF-ESTADO",
+      "description": "Recurso SIC `firewall-sitios-webs`. DAG: 2_2_waf_estado."
+    },
+    {
+      "name": "ANTIDDOS-ACTIVACION",
+      "description": "Recurso SIC `proteccion-denegacion-servicios`. DAG: 2_3_antiddos_activacion."
+    },
+    {
+      "name": "ANTISPAM",
+      "description": "Recurso SIC `antispams`. DAG: 2_4_antispam."
+    },
+    {
+      "name": "DNS-SEGURO-ESTATUS",
+      "description": "Recurso SIC `dns-seguro-statuses`. DAG: 2_5_dns_seguro_estatus."
+    },
+    {
+      "name": "SECURITY-CENTER",
+      "description": "Recurso SIC `security-centers`. DAG: 2_6_security_center."
+    },
+    {
+      "name": "SOC",
+      "description": "Recurso SIC `servicios-soc-csirts`. DAG: 2_8_soc."
+    },
+    {
+      "name": "BACKUP-SERVICIO-ESTADO",
+      "description": "Estado del servicio de Backup obtenido desde SIC. DAG: 3_3_backup_servicio_estado."
+    },
+    {
+      "name": "BACKUP-EJECUTIVO",
+      "description": "Recurso SIC `backup-ejecutivos`. DAG: 3_4_backup_ejecutivo."
+    },
+    {
+      "name": "MONITOREO-ENLACE",
+      "description": "Recurso SIC `monitoreo-enlace-infraestructuras`. DAG: 3_8_monitoreo_enlace."
+    },
+    {
+      "name": "GRABACION-EVENTOS",
+      "description": "Recurso SIC `grabacion-eventos`. DAG: 4_2_grabacion_eventos."
+    },
+    {
+      "name": "REPOSITORIO-CONOCIMIENTO",
+      "description": "Recurso SIC `repositorio-multimedias`. DAG: 4_4_repositorio_conocimiento."
+    },
+    {
+      "name": "LLM",
+      "description": "Recurso SIC `elsas`. DAG: 5_1_llm."
+    },
+    {
+      "name": "MOODLE",
+      "description": "Recurso SIC `moodles`. DAG: 5_1_moodle."
+    },
+    {
+      "name": "PLATAFORMA-MOOC",
+      "description": "Recurso SIC `moocs-formacion-continuas`. DAG: 5_2_plataforma_mooc."
+    },
+    {
+      "name": "UDECIDE",
+      "description": "Recurso SIC `udecides`. DAG: 5_5_udecide."
+    },
+    {
+      "name": "VENUE",
+      "description": "Recurso SIC `venues`. DAG: 5_6_venue."
+    },
+    {
+      "name": "ROA",
+      "description": "Repositorio de Objetos de Aprendizaje (ROA). DAG: 6_2_roa."
+    },
+    {
+      "name": "RRAAE Solr",
+      "description": "Facets Solr del núcleo biblio. DAG: 6_3_rraae."
+    },
+    {
+      "name": "REDI",
+      "description": "Estadísticas por universidad. DAG: 6_4_redi."
+    },
+    {
+      "name": "ORGANIZATION-PAQUETE",
+      "description": "Recurso SIC `ies`. DAG: organization_paquete."
+    },
+    {
+      "name": "PACKAGES-BACKUP-SERVICIO",
+      "description": "Recurso SIC `capacidad-paquetes`. DAG: packages_backup_servicio."
+    },
+    {
+      "name": "PACKAGES-CLOUD",
+      "description": "Recurso SIC `capacidad-paquete-clouds`. DAG: packages_cloud."
+    },
+    {
+      "name": "PACKAGES-ELSA",
+      "description": "Recurso SIC `capacidad-paquetes` (vista ELSA). DAG: packages_elsa."
+    },
+    {
+      "name": "PACKAGES-RED-AVANZADA",
+      "description": "Recurso SIC `capacidad-paquetes` (vista Red Avanzada). DAG: packages_red_avanzada."
+    },
+    {
+      "name": "PACKAGES-VIDEOCONFERENCIA",
+      "description": "Recurso SIC `capacidad-paquetes` (vista Videoconferencia). DAG: packages_videoconferencia."
+    }
+  ],
+  "paths": {
+    "/auth/local": {
+      "post": {
+        "tags": [
+          "Autenticación"
+        ],
+        "summary": "Autenticar y obtener JWT",
+        "description": "Endpoint usado por `libs.sic.Sic.authorizate()`. Credenciales desde Variables Airflow `SIC_USER_WEB` / `SIC_PASS_WEB`.",
+        "operationId": "postAuthLocal",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SicAuthRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Autenticación exitosa; incluye JWT.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SicAuthResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Credenciales inválidas o cuerpo mal formado."
+          },
+          "401": {
+            "description": "No autorizado."
+          }
+        },
+        "x-cedia-dags": [
+          "0_diagnostico_cti",
+          "1_0_red_avanzada_sedes",
+          "1_2_lan_extendida",
+          "1_3_tuneles_datos",
+          "1_4_eduroam",
+          "2_1_firewall_perimetral",
+          "2_2_waf_estado",
+          "2_3_antiddos_activacion",
+          "2_4_antispam",
+          "2_5_dns_seguro_estatus",
+          "2_6_security_center",
+          "2_8_soc",
+          "3_3_backup_servicio_estado",
+          "3_4_backup_ejecutivo",
+          "3_8_monitoreo_enlace",
+          "4_2_grabacion_eventos",
+          "4_4_repositorio_conocimiento",
+          "5_1_llm",
+          "5_1_moodle",
+          "5_2_plataforma_mooc",
+          "5_5_udecide",
+          "5_6_venue",
+          "6_2_roa",
+          "6_3_rraae",
+          "6_4_redi",
+          "organization_paquete",
+          "packages_backup_servicio",
+          "packages_cloud",
+          "packages_elsa",
+          "packages_red_avanzada",
+          "packages_videoconferencia"
+        ]
+      }
+    },
+    "/diagnostico-asgs": {
+      "get": {
+        "tags": [
+          "DIAGNOSTICO-CTI"
+        ],
+        "summary": "Obtener registros diagnostico-asgs",
+        "description": "Consulta utilizada por el ETL. Campos loader: fecha_activacion, presupuesto_utilizado, institucion, presupuesto_total, tipo, Descripcion.",
+        "operationId": "getDiagnosticoAsgs",
+        "parameters": [
+          {
+            "name": "_limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 100000,
+              "minimum": 1
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Listado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DiagnosticoAsgsRecord"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No autenticado"
+          }
+        },
+        "x-cedia-dag": "0_diagnostico_cti",
+        "x-cedia-source-file": "0_diagnostico_cti/diagnostico-asgs-open.json",
+        "x-cedia-silver-table": "dt_diagnostico_cti"
+      }
+    },
+    "/red-avanzadas": {
+      "get": {
+        "tags": [
+          "RED-AVANZADA-SEDES"
+        ],
+        "summary": "Obtener registros red-avanzadas",
+        "description": "Consulta utilizada por el ETL. Campos loader: proveedor, login_piloto, Telcos, Sede, IC, RA, Backup_cedia, observaciones, backup_proveedor, institucion, Tipo_sede, fecha_activacion, visible, tipo, latitud, longitud.",
+        "operationId": "getRedAvanzadas",
+        "parameters": [
+          {
+            "name": "_limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 100000,
+              "minimum": 1
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Listado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RedAvanzadasRecord"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No autenticado"
+          }
+        },
+        "x-cedia-dag": "1_0_red_avanzada_sedes",
+        "x-cedia-source-file": "1_0_red_avanzada_sedes/red-avanzadas-open.json",
+        "x-cedia-silver-table": "dt_red_avanzada"
+      }
+    },
+    "/lan-extendidas": {
+      "get": {
+        "tags": [
+          "LAN-EXTENDIDA"
+        ],
+        "summary": "Obtener registros de LAN extendida",
+        "description": "Consulta utilizada por el ETL. El loader conserva únicamente fecha_activacion, institucion, descripcion, activado y cantidad_sedes.",
+        "operationId": "getLanExtendidas",
+        "parameters": [
+          {
+            "name": "_limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 100000,
+              "minimum": 1
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Listado de LAN extendida con los campos consumidos por el ETL.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/LanExtendida"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No autenticado"
+          }
+        },
+        "x-cedia-dag": "1_2_lan_extendida",
+        "x-cedia-source-file": "1_2_lan_extendida/lan-extendida-open.json",
+        "x-cedia-silver-table": "dt_lan_extendida_data"
+      }
+    },
+    "/tunel-datos": {
+      "get": {
+        "tags": [
+          "TUNELES-DATOS"
+        ],
+        "summary": "Obtener registros tunel-datos",
+        "description": "Consulta utilizada por el ETL. Campos loader: fecha_activacion, institucion, descripcion, activado, cantidad_sede.",
+        "operationId": "getTunelDatos",
+        "parameters": [
+          {
+            "name": "_limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 100000,
+              "minimum": 1
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Listado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TunelDatosRecord"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No autenticado"
+          }
+        },
+        "x-cedia-dag": "1_3_tuneles_datos",
+        "x-cedia-source-file": "1_3_tuneles_datos/tunel-datos-open.json",
+        "x-cedia-silver-table": "dt_tuneles_datos_data"
+      }
+    },
+    "/freeradius*/_search": {
+      "get": {
+        "tags": [
+          "eduroam"
+        ],
+        "summary": "Buscar eventos Login OK eduroam",
+        "description": "Query Lucene con rango @timestamp. Campos _source: username, radius_client, timestamp, idsesion.",
+        "operationId": "searchEduroamFreeradius",
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Login AND OK AND org- AND @timestamp:[from TO to]"
+          },
+          {
+            "name": "_source",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "default": "username,radius_client,timestamp,idsesion"
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "default": 900000
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "default": "@timestamp:asc"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Hits ES",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EsSearchResponse"
+                }
+              }
+            }
+          }
+        },
+        "x-cedia-dag": "1_4_eduroam",
+        "x-cedia-source-file": "1_4_eduroam/eduroam-open.json",
+        "x-cedia-silver-table": "dt_eduroam_data_raw"
+      }
+    },
+    "/firewall-perimetrals": {
+      "get": {
+        "tags": [
+          "FIREWALL-PERIMETRAL"
+        ],
+        "summary": "Obtener registros firewall-perimetrals",
+        "description": "Consulta utilizada por el ETL. Campos loader: fecha_activacion, institucion, activo.",
+        "operationId": "getFirewallPerimetrals",
+        "parameters": [
+          {
+            "name": "_limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 100000,
+              "minimum": 1
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Listado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FirewallPerimetralsRecord"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No autenticado"
+          }
+        },
+        "x-cedia-dag": "2_1_firewall_perimetral",
+        "x-cedia-source-file": "2_1_firewall_perimetral/firewall-perimetrals-open.json",
+        "x-cedia-silver-table": "dt_firewall_perimetral_data"
+      }
+    },
+    "/firewall-sitios-webs": {
+      "get": {
+        "tags": [
+          "WAF-ESTADO"
+        ],
+        "summary": "Obtener registros firewall-sitios-webs",
+        "description": "Consulta utilizada por el ETL. Campos loader: fecha_activacion, institucion, activo.",
+        "operationId": "getFirewallSitiosWebs",
+        "parameters": [
+          {
+            "name": "_limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 100000,
+              "minimum": 1
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Listado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FirewallSitiosWebsRecord"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No autenticado"
+          }
+        },
+        "x-cedia-dag": "2_2_waf_estado",
+        "x-cedia-source-file": "2_2_waf_estado/firewall-sitios-webs-open.json",
+        "x-cedia-silver-table": "dt_waf_data"
+      }
+    },
+    "/proteccion-denegacion-servicios": {
+      "get": {
+        "tags": [
+          "ANTIDDOS-ACTIVACION"
+        ],
+        "summary": "Obtener registros proteccion-denegacion-servicios",
+        "description": "Consulta utilizada por el ETL. Campos loader: fecha_activacion, activo, institucion.",
+        "operationId": "getProteccionDenegacionServicios",
+        "parameters": [
+          {
+            "name": "_limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 100000,
+              "minimum": 1
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Listado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProteccionDenegacionServiciosRecord"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No autenticado"
+          }
+        },
+        "x-cedia-dag": "2_3_antiddos_activacion",
+        "x-cedia-source-file": "2_3_antiddos_activacion/proteccion-denegacion-servicios-open.json",
+        "x-cedia-silver-table": "dt_proteccion_denegacion_ser_data"
+      }
+    },
+    "/antispams": {
+      "get": {
+        "tags": [
+          "ANTISPAM"
+        ],
+        "summary": "Obtener registros antispams",
+        "description": "Consulta utilizada por el ETL. Campos loader: fecha_activacion, institucion, activo.",
+        "operationId": "getAntispams",
+        "parameters": [
+          {
+            "name": "_limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 100000,
+              "minimum": 1
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Listado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AntispamsRecord"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No autenticado"
+          }
+        },
+        "x-cedia-dag": "2_4_antispam",
+        "x-cedia-source-file": "2_4_antispam/antispams-open.json",
+        "x-cedia-silver-table": "dt_antispam_data"
+      }
+    },
+    "/dns-seguro-statuses": {
+      "get": {
+        "tags": [
+          "DNS-SEGURO-ESTATUS"
+        ],
+        "summary": "Obtener registros dns-seguro-statuses",
+        "description": "Consulta utilizada por el ETL. Campos loader: Fecha_activacion, Estado, institucion.",
+        "operationId": "getDnsSeguroStatuses",
+        "parameters": [
+          {
+            "name": "_limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 100000,
+              "minimum": 1
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Listado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DnsSeguroStatusesRecord"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No autenticado"
+          }
+        },
+        "x-cedia-dag": "2_5_dns_seguro_estatus",
+        "x-cedia-source-file": "2_5_dns_seguro_estatus/dns-seguro-statuses-open.json",
+        "x-cedia-silver-table": "dt_dns_seguro_status"
+      }
+    },
+    "/security-centers": {
+      "get": {
+        "tags": [
+          "SECURITY-CENTER"
+        ],
+        "summary": "Obtener registros security-centers",
+        "description": "Consulta utilizada por el ETL. Campos loader: fecha_activacion, institucion, estado, tipo.",
+        "operationId": "getSecurityCenters",
+        "parameters": [
+          {
+            "name": "_limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 100000,
+              "minimum": 1
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Listado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SecurityCentersRecord"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No autenticado"
+          }
+        },
+        "x-cedia-dag": "2_6_security_center",
+        "x-cedia-source-file": "2_6_security_center/security-centers-open.json",
+        "x-cedia-silver-table": "dt_securitycenter_data"
+      }
+    },
+    "/servicios-soc-csirts": {
+      "get": {
+        "tags": [
+          "SOC"
+        ],
+        "summary": "Obtener registros servicios-soc-csirts",
+        "description": "Consulta utilizada por el ETL. Campos loader: Fecha_soc, Activo_soc, Estado_soc, Cantidad_eps_paquete, Numero_dispositivos_soc, institucion_id, Fecha_security_center, Activo_security_center.",
+        "operationId": "getServiciosSocCsirts",
+        "parameters": [
+          {
+            "name": "_limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 100000,
+              "minimum": 1
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Listado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ServiciosSocCsirtsRecord"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No autenticado"
+          }
+        },
+        "x-cedia-dag": "2_8_soc",
+        "x-cedia-source-file": "2_8_soc/servicios-soc-csirts-open.json",
+        "x-cedia-silver-table": "dt_soc_sic_data"
+      }
+    },
+    "/backup-como-servicios": {
+      "get": {
+        "tags": [
+          "BACKUP-SERVICIO-ESTADO"
+        ],
+        "summary": "Obtener estados de Backup como Servicio",
+        "description": "Consulta utilizada por el ETL. El loader conserva únicamente fecha_activacion, institucion, maquinas_virtuales_desplegadas, activo, almacenamiento_usado y puntos_usados.",
+        "operationId": "getBackupComoServicios",
+        "parameters": [
+          {
+            "name": "_limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 100000,
+              "minimum": 1
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Listado de estados de Backup como Servicio.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BackupServicioEstado"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token JWT ausente, inválido o expirado."
+          }
+        },
+        "x-cedia-dag": "3_3_backup_servicio_estado",
+        "x-cedia-source-file": "3_3_backup_servicio_estado/backup-estado-open.json",
+        "x-cedia-silver-table": "dt_baas_data"
+      }
+    },
+    "/backup-ejecutivos": {
+      "get": {
+        "tags": [
+          "BACKUP-EJECUTIVO"
+        ],
+        "summary": "Obtener registros backup-ejecutivos",
+        "description": "Consulta utilizada por el ETL. Campos loader: fecha_activacion, institucion, activo, capacidad_gb.",
+        "operationId": "getBackupEjecutivos",
+        "parameters": [
+          {
+            "name": "_limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 100000,
+              "minimum": 1
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Listado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BackupEjecutivosRecord"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No autenticado"
+          }
+        },
+        "x-cedia-dag": "3_4_backup_ejecutivo",
+        "x-cedia-source-file": "3_4_backup_ejecutivo/backup-ejecutivos-open.json",
+        "x-cedia-silver-table": "dt_backup_ejec_data"
+      }
+    },
+    "/monitoreo-enlace-infraestructuras": {
+      "get": {
+        "tags": [
+          "MONITOREO-ENLACE"
+        ],
+        "summary": "Obtener registros monitoreo-enlace-infraestructuras",
+        "description": "Consulta utilizada por el ETL. Campos loader: fecha_activacion, institucion, activo.",
+        "operationId": "getMonitoreoEnlaceInfraestructuras",
+        "parameters": [
+          {
+            "name": "_limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 100000,
+              "minimum": 1
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Listado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MonitoreoEnlaceInfraestructurasRecord"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No autenticado"
+          }
+        },
+        "x-cedia-dag": "3_8_monitoreo_enlace",
+        "x-cedia-source-file": "3_8_monitoreo_enlace/monitoreo-enlace-infraestructuras-open.json",
+        "x-cedia-silver-table": "dt_monit_enlac_infra_data"
+      }
+    },
+    "/grabacion-eventos": {
+      "get": {
+        "tags": [
+          "GRABACION-EVENTOS"
+        ],
+        "summary": "Obtener registros grabacion-eventos",
+        "description": "Consulta utilizada por el ETL. Campos loader: fecha, institucion, cantidad_eventos.",
+        "operationId": "getGrabacionEventos",
+        "parameters": [
+          {
+            "name": "_limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 100000,
+              "minimum": 1
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Listado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GrabacionEventosRecord"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No autenticado"
+          }
+        },
+        "x-cedia-dag": "4_2_grabacion_eventos",
+        "x-cedia-source-file": "4_2_grabacion_eventos/grabacion-eventos-open.json",
+        "x-cedia-silver-table": "dt_grabacion_eventos_data"
+      }
+    },
+    "/repositorio-multimedias": {
+      "get": {
+        "tags": [
+          "REPOSITORIO-CONOCIMIENTO"
+        ],
+        "summary": "Obtener registros repositorio-multimedias",
+        "description": "Consulta utilizada por el ETL. Campos loader: fecha_activacion, numero_videos, institucion, observaciones.",
+        "operationId": "getRepositorioMultimedias",
+        "parameters": [
+          {
+            "name": "_limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 100000,
+              "minimum": 1
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Listado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RepositorioMultimediasRecord"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No autenticado"
+          }
+        },
+        "x-cedia-dag": "4_4_repositorio_conocimiento",
+        "x-cedia-source-file": "4_4_repositorio_conocimiento/repositorio-multimedias-open.json",
+        "x-cedia-silver-table": "dt_repo_multimedia_data"
+      }
+    },
+    "/elsas": {
+      "get": {
+        "tags": [
+          "LLM"
+        ],
+        "summary": "Obtener registros elsas",
+        "description": "Consulta utilizada por el ETL. Campos loader: tipo, dominio, fecha_expiracion, limite_consultas, limite_almacenamiento, report_url, prompt_url, institucion_id, permisos.",
+        "operationId": "getElsas",
+        "parameters": [
+          {
+            "name": "_limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 100000,
+              "minimum": 1
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Listado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ElsasRecord"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No autenticado"
+          }
+        },
+        "x-cedia-dag": "5_1_llm",
+        "x-cedia-source-file": "5_1_llm/elsas-open.json",
+        "x-cedia-silver-table": "dt_llm_data"
+      }
+    },
+    "/moodles": {
+      "get": {
+        "tags": [
+          "MOODLE"
+        ],
+        "summary": "Obtener registros moodles",
+        "description": "Consulta utilizada por el ETL. Campos loader: fecha_activacion, gb_storage, gb_ram, nro_vcpu, nro_usuarios_nombrados, nro_usuarios_concurrentes, modo_saas, institucion, audiencia, url, estado, elsa_its, elsa_gml.",
+        "operationId": "getMoodles",
+        "parameters": [
+          {
+            "name": "_limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 100000,
+              "minimum": 1
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Listado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MoodlesRecord"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No autenticado"
+          }
+        },
+        "x-cedia-dag": "5_1_moodle",
+        "x-cedia-source-file": "5_1_moodle/moodles-open.json",
+        "x-cedia-silver-table": "dt_moodle_data"
+      }
+    },
+    "/moocs-formacion-continuas": {
+      "get": {
+        "tags": [
+          "PLATAFORMA-MOOC"
+        ],
+        "summary": "Obtener registros moocs-formacion-continuas",
+        "description": "Consulta utilizada por el ETL. Campos loader: fecha_publicacion, institucion, nombre_mooc, num_inscritos.",
+        "operationId": "getMoocsFormacionContinuas",
+        "parameters": [
+          {
+            "name": "_limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 100000,
+              "minimum": 1
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Listado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MoocsFormacionContinuasRecord"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No autenticado"
+          }
+        },
+        "x-cedia-dag": "5_2_plataforma_mooc",
+        "x-cedia-source-file": "5_2_plataforma_mooc/moocs-formacion-continuas-open.json",
+        "x-cedia-silver-table": "dt_mooc_data"
+      }
+    },
+    "/udecides": {
+      "get": {
+        "tags": [
+          "UDECIDE"
+        ],
+        "summary": "Obtener registros udecides",
+        "description": "Consulta utilizada por el ETL. Campos loader: fecha_activacion, institucion, numero_votantes_paquete, numero_votantes_adicional, tipo_eleccion.",
+        "operationId": "getUdecides",
+        "parameters": [
+          {
+            "name": "_limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 100000,
+              "minimum": 1
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Listado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UdecidesRecord"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No autenticado"
+          }
+        },
+        "x-cedia-dag": "5_5_udecide",
+        "x-cedia-source-file": "5_5_udecide/udecides-open.json",
+        "x-cedia-silver-table": "dt_udecide"
+      }
+    },
+    "/venues": {
+      "get": {
+        "tags": [
+          "VENUE"
+        ],
+        "summary": "Obtener registros venues",
+        "description": "Consulta utilizada por el ETL. Campos loader: fecha_evento, nombre_evento, observaciones, institucion, numero_participantes.",
+        "operationId": "getVenues",
+        "parameters": [
+          {
+            "name": "_limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 100000,
+              "minimum": 1
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Listado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/VenuesRecord"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No autenticado"
+          }
+        },
+        "x-cedia-dag": "5_6_venue",
+        "x-cedia-source-file": "5_6_venue/venues-open.json",
+        "x-cedia-silver-table": "dt_venue_data"
+      }
+    },
+    "/roas": {
+      "get": {
+        "tags": [
+          "ROA"
+        ],
+        "summary": "Obtener registros ROA",
+        "description": "Consulta utilizada por el ETL. El loader conserva únicamente fecha_activacion, numero_de_objetos_apre e institucion. SIC puede entregar institucion como objeto; el process normaliza a nombre (string).",
+        "operationId": "getRoas",
+        "parameters": [
+          {
+            "name": "_limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 100000,
+              "minimum": 1
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Listado ROA con los campos consumidos por el ETL.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Roa"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No autenticado"
+          }
+        },
+        "x-cedia-dag": "6_2_roa",
+        "x-cedia-source-file": "6_2_roa/roa-open.json",
+        "x-cedia-silver-table": "dt_roa_data"
+      }
+    },
+    "/select": {
+      "get": {
+        "tags": [
+          "RRAAE Solr"
+        ],
+        "summary": "Consulta Solr select (facets institution / format)",
+        "description": "Operación única documentada para OpenMetadata (FQN hint: RRAAE Solr.biblio./select).\n\nEl ETL realiza dos usos:\n1) `facet.field=institution` — listado de instituciones.\n2) `facet.field=format` + `fq=institution:\"…\"` — conteos por tipo de documento de cada IES.\n\nRespuesta: XML Solr (`wt=xml`). El loader parsea facet_fields y emite el schema RraaeRawRecord.",
+        "operationId": "getRraaeSolrSelect",
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "*:*"
+            },
+            "description": "Query Solr."
+          },
+          {
+            "name": "rows",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 0
+            },
+            "description": "El ETL usa 0 (solo facets)."
+          },
+          {
+            "name": "wt",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "xml",
+              "enum": [
+                "xml"
+              ]
+            }
+          },
+          {
+            "name": "facet",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
+          },
+          {
+            "name": "facet.field",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "institution",
+                "format"
+              ]
+            },
+            "description": "institution (paso 1) o format (paso 2)."
+          },
+          {
+            "name": "fq",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filtro opcional. Paso 2: institution:\"{nombre}\"."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "XML Solr con facet_counts / facet_fields.",
+            "content": {
+              "application/xml": {
+                "schema": {
+                  "type": "string",
+                  "description": "Documento XML Solr; el loader extrae int[@name] bajo el facet field."
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "description": "Proyección lógica del loader hacia Bronze (no es el payload Solr).",
+                  "items": {
+                    "$ref": "#/components/schemas/RraaeRawRecord"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error Solr / red"
+          }
+        },
+        "x-cedia-dag": "6_3_rraae",
+        "x-cedia-source-file": "6_3_rraae/rraae-open.json",
+        "x-cedia-silver-table": "dt_rraae_data"
+      }
+    },
+    "/nest/universities/statistics": {
+      "get": {
+        "tags": [
+          "REDI"
+        ],
+        "summary": "Estadísticas de universidades REDI",
+        "description": "Respuesta JSON-LD con @graph. El ETL usa uc:name como alias de lookup (código corto) y los conteos @value de autores/publicaciones.",
+        "operationId": "getRediUniversitiesStatistics",
+        "responses": {
+          "200": {
+            "description": "Documento JSON-LD de estadísticas.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RediStatisticsResponse"
+                }
+              }
+            }
+          }
+        },
+        "x-cedia-dag": "6_4_redi",
+        "x-cedia-source-file": "6_4_redi/redi-open.json",
+        "x-cedia-silver-table": "dt_redi_data"
+      }
+    },
+    "/ies": {
+      "get": {
+        "tags": [
+          "ORGANIZATION-PAQUETE"
+        ],
+        "summary": "Obtener registros ies",
+        "description": "Consulta utilizada por el ETL. Campos loader: nombre, paquete_cedia, nombre_completo, id, activo.",
+        "operationId": "getIes",
+        "parameters": [
+          {
+            "name": "_limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 100000,
+              "minimum": 1
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Listado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/IesRecord"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No autenticado"
+          }
+        },
+        "x-cedia-dag": "organization_paquete",
+        "x-cedia-source-file": "organization_paquete/ies-open.json",
+        "x-cedia-silver-table": "organization_packages"
+      }
+    },
+    "/capacidad-paquetes": {
+      "get": {
+        "tags": [
+          "PACKAGES-BACKUP-SERVICIO"
+        ],
+        "summary": "Obtener registros capacidad-paquetes",
+        "description": "Consulta utilizada por el ETL. Campos loader: servicio, paquete_institucion, capacidad, unidad, nombre_capacidad.",
+        "operationId": "getCapacidadPaquetes",
+        "parameters": [
+          {
+            "name": "_limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 100000,
+              "minimum": 1
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Listado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CapacidadPaquetesRecord"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No autenticado"
+          }
+        },
+        "x-cedia-dag": "packages_backup_servicio",
+        "x-cedia-source-file": "packages_backup_servicio/capacidad-paquetes-open.json",
+        "x-cedia-silver-table": "packages_backup_service"
+      }
+    },
+    "/capacidad-paquete-clouds": {
+      "get": {
+        "tags": [
+          "PACKAGES-CLOUD"
+        ],
+        "summary": "Obtener registros capacidad-paquete-clouds",
+        "description": "Consulta utilizada por el ETL. Campos loader: servicio, paquete_institucione, CPU, RAM_GB, DISCO_GB, nombre_capacidad_cloud, Maquinas_virtuales.",
+        "operationId": "getCapacidadPaqueteClouds",
+        "parameters": [
+          {
+            "name": "_limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 100000,
+              "minimum": 1
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Listado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CapacidadPaqueteCloudsRecord"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No autenticado"
+          }
+        },
+        "x-cedia-dag": "packages_cloud",
+        "x-cedia-source-file": "packages_cloud/capacidad-paquete-clouds-open.json",
+        "x-cedia-silver-table": "packages_cloud"
+      }
+    },
+    "/capacidad-paquetes-elsa": {
+      "get": {
+        "tags": [
+          "PACKAGES-ELSA"
+        ],
+        "summary": "Obtener capacidad paquetes (ELSA)",
+        "description": "Consulta ETL packages_elsa. Endpoint SIC real: /capacidad-paquetes. Path documental único para el aggregate OM.",
+        "operationId": "getCapacidadPaquetesElsa",
+        "parameters": [
+          {
+            "name": "_limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 100000,
+              "minimum": 1
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Listado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PackagesElsaRecord"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No autenticado"
+          }
+        },
+        "x-cedia-dag": "packages_elsa",
+        "x-cedia-source-file": "packages_elsa/capacidad-paquetes-elsa-open.json",
+        "x-cedia-silver-table": "packages_elsa"
+      }
+    },
+    "/capacidad-paquetes-red-avanzada": {
+      "get": {
+        "tags": [
+          "PACKAGES-RED-AVANZADA"
+        ],
+        "summary": "Obtener capacidad paquetes (Red Avanzada)",
+        "description": "Consulta ETL packages_red_avanzada. Endpoint SIC real: /capacidad-paquetes. Path documental único para el aggregate OM.",
+        "operationId": "getCapacidadPaquetesRedAvanzada",
+        "parameters": [
+          {
+            "name": "_limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 100000,
+              "minimum": 1
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Listado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PackagesRedAvanzadaRecord"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No autenticado"
+          }
+        },
+        "x-cedia-dag": "packages_red_avanzada",
+        "x-cedia-source-file": "packages_red_avanzada/capacidad-paquetes-red-avanzada-open.json",
+        "x-cedia-silver-table": "packages_red_avanzada"
+      }
+    },
+    "/capacidad-paquetes-videoconferencia": {
+      "get": {
+        "tags": [
+          "PACKAGES-VIDEOCONFERENCIA"
+        ],
+        "summary": "Obtener capacidad paquetes (Videoconferencia)",
+        "description": "Consulta ETL packages_videoconferencia. Endpoint SIC real: /capacidad-paquetes. Path documental único para el aggregate OM.",
+        "operationId": "getCapacidadPaquetesVideoconferencia",
+        "parameters": [
+          {
+            "name": "_limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 100000,
+              "minimum": 1
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Listado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PackagesVideoconferenciaRecord"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No autenticado"
+          }
+        },
+        "x-cedia-dag": "packages_videoconferencia",
+        "x-cedia-source-file": "packages_videoconferencia/capacidad-paquetes-videoconferencia-open.json",
+        "x-cedia-silver-table": "packages_videoconferencia"
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "description": "JWT obtenido mediante POST /auth/local. Variables Airflow SIC_USER_WEB / SIC_PASS_WEB."
+      }
+    },
+    "schemas": {
+      "SicAuthRequest": {
+        "type": "object",
+        "required": [
+          "identifier",
+          "password"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "identifier": {
+            "type": "string",
+            "description": "Usuario SIC (Variable Airflow SIC_USER_WEB)."
+          },
+          "password": {
+            "type": "string",
+            "format": "password",
+            "description": "Contraseña SIC (Variable Airflow SIC_PASS_WEB)."
+          }
+        }
+      },
+      "SicAuthResponse": {
+        "type": "object",
+        "properties": {
+          "jwt": {
+            "type": "string",
+            "description": "Token Bearer para llamadas posteriores a recursos SIC."
+          },
+          "user": {
+            "type": "object",
+            "description": "Metadatos del usuario autenticado.",
+            "additionalProperties": true
+          }
+        }
+      },
+      "DiagnosticoAsgsRecord": {
+        "type": "object",
+        "properties": {
+          "fecha_activacion": {
+            "type": "string",
+            "format": "date"
+          },
+          "presupuesto_utilizado": {
+            "oneOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "integer"
+              },
+              {
+                "type": "string"
+              }
+            ]
+          },
+          "institucion": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "nombre": {
+                    "type": "string"
+                  }
+                }
+              }
+            ]
+          },
+          "presupuesto_total": {
+            "oneOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "integer"
+              },
+              {
+                "type": "string"
+              }
+            ]
+          },
+          "tipo": {
+            "type": "string"
+          },
+          "Descripcion": {
+            "type": "string"
+          }
+        }
+      },
+      "RedAvanzadasRecord": {
+        "type": "object",
+        "properties": {
+          "proveedor": {
+            "type": "string"
+          },
+          "login_piloto": {
+            "type": "string"
+          },
+          "Telcos": {
+            "type": "string"
+          },
+          "Sede": {
+            "type": "string"
+          },
+          "IC": {
+            "type": "string"
+          },
+          "RA": {
+            "type": "string"
+          },
+          "Backup_cedia": {
+            "type": "string"
+          },
+          "observaciones": {
+            "type": "string"
+          },
+          "backup_proveedor": {
+            "type": "string"
+          },
+          "institucion": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "nombre": {
+                    "type": "string"
+                  }
+                }
+              }
+            ]
+          },
+          "Tipo_sede": {
+            "type": "string"
+          },
+          "fecha_activacion": {
+            "type": "string",
+            "format": "date"
+          },
+          "visible": {
+            "oneOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "integer"
+              },
+              {
+                "type": "string"
+              }
+            ]
+          },
+          "tipo": {
+            "type": "string"
+          },
+          "latitud": {
+            "type": "string"
+          },
+          "longitud": {
+            "type": "string"
+          }
+        }
+      },
+      "LanExtendida": {
+        "type": "object",
+        "required": [
+          "fecha_activacion",
+          "institucion"
+        ],
+        "properties": {
+          "fecha_activacion": {
+            "type": "string",
+            "format": "date",
+            "description": "Fecha de activación del servicio."
+          },
+          "institucion": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "nombre": {
+                    "type": "string"
+                  }
+                }
+              }
+            ],
+            "description": "Institución; el ETL normaliza objeto.nombre a string."
+          },
+          "descripcion": {
+            "type": "string",
+            "maxLength": 512
+          },
+          "activado": {
+            "oneOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "integer"
+              },
+              {
+                "type": "string"
+              }
+            ]
+          },
+          "cantidad_sedes": {
+            "oneOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "string"
+              }
+            ]
+          }
+        }
+      },
+      "TunelDatosRecord": {
+        "type": "object",
+        "properties": {
+          "fecha_activacion": {
+            "type": "string",
+            "format": "date"
+          },
+          "institucion": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "nombre": {
+                    "type": "string"
+                  }
+                }
+              }
+            ]
+          },
+          "descripcion": {
+            "type": "string"
+          },
+          "activado": {
+            "oneOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "integer"
+              },
+              {
+                "type": "string"
+              }
+            ]
+          },
+          "cantidad_sede": {
+            "oneOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "integer"
+              },
+              {
+                "type": "string"
+              }
+            ]
+          }
+        }
+      },
+      "EsSearchResponse": {
+        "type": "object",
+        "properties": {
+          "hits": {
+            "type": "object",
+            "properties": {
+              "hits": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/EsHit"
+                }
+              }
+            }
+          }
+        }
+      },
+      "EsHit": {
+        "type": "object",
+        "properties": {
+          "_source": {
+            "$ref": "#/components/schemas/EduroamRawSource"
+          }
+        }
+      },
+      "EduroamRawSource": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string",
+            "description": "PII; anonimizado en process"
+          },
+          "radius_client": {
+            "type": "string"
+          },
+          "timestamp": {
+            "type": "string"
+          },
+          "idsesion": {
+            "type": "string"
+          }
+        }
+      },
+      "FirewallPerimetralsRecord": {
+        "type": "object",
+        "properties": {
+          "fecha_activacion": {
+            "type": "string",
+            "format": "date"
+          },
+          "institucion": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "nombre": {
+                    "type": "string"
+                  }
+                }
+              }
+            ]
+          },
+          "activo": {
+            "oneOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "integer"
+              },
+              {
+                "type": "string"
+              }
+            ]
+          }
+        }
+      },
+      "FirewallSitiosWebsRecord": {
+        "type": "object",
+        "properties": {
+          "fecha_activacion": {
+            "type": "string",
+            "format": "date"
+          },
+          "institucion": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "nombre": {
+                    "type": "string"
+                  }
+                }
+              }
+            ]
+          },
+          "activo": {
+            "oneOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "integer"
+              },
+              {
+                "type": "string"
+              }
+            ]
+          }
+        }
+      },
+      "ProteccionDenegacionServiciosRecord": {
+        "type": "object",
+        "properties": {
+          "fecha_activacion": {
+            "type": "string",
+            "format": "date"
+          },
+          "activo": {
+            "oneOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "integer"
+              },
+              {
+                "type": "string"
+              }
+            ]
+          },
+          "institucion": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "nombre": {
+                    "type": "string"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      },
+      "AntispamsRecord": {
+        "type": "object",
+        "properties": {
+          "fecha_activacion": {
+            "type": "string",
+            "format": "date"
+          },
+          "institucion": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "nombre": {
+                    "type": "string"
+                  }
+                }
+              }
+            ]
+          },
+          "activo": {
+            "oneOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "integer"
+              },
+              {
+                "type": "string"
+              }
+            ]
+          }
+        }
+      },
+      "DnsSeguroStatusesRecord": {
+        "type": "object",
+        "properties": {
+          "Fecha_activacion": {
+            "type": "string",
+            "format": "date"
+          },
+          "Estado": {
+            "type": "string"
+          },
+          "institucion": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "nombre": {
+                    "type": "string"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      },
+      "SecurityCentersRecord": {
+        "type": "object",
+        "properties": {
+          "fecha_activacion": {
+            "type": "string",
+            "format": "date"
+          },
+          "institucion": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "nombre": {
+                    "type": "string"
+                  }
+                }
+              }
+            ]
+          },
+          "estado": {
+            "type": "string"
+          },
+          "tipo": {
+            "type": "string"
+          }
+        }
+      },
+      "ServiciosSocCsirtsRecord": {
+        "type": "object",
+        "properties": {
+          "Fecha_soc": {
+            "type": "string",
+            "format": "date"
+          },
+          "Activo_soc": {
+            "oneOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "integer"
+              },
+              {
+                "type": "string"
+              }
+            ]
+          },
+          "Estado_soc": {
+            "type": "string"
+          },
+          "Cantidad_eps_paquete": {
+            "oneOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "integer"
+              },
+              {
+                "type": "string"
+              }
+            ]
+          },
+          "Numero_dispositivos_soc": {
+            "oneOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "integer"
+              },
+              {
+                "type": "string"
+              }
+            ]
+          },
+          "institucion_id": {
+            "type": "string"
+          },
+          "Fecha_security_center": {
+            "type": "string",
+            "format": "date"
+          },
+          "Activo_security_center": {
+            "oneOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "integer"
+              },
+              {
+                "type": "string"
+              }
+            ]
+          }
+        }
+      },
+      "BackupServicioEstado": {
+        "type": "object",
+        "description": "Proyección de campos SIC del DAG 3_3_backup_servicio_estado.",
+        "additionalProperties": false,
+        "properties": {
+          "fecha_activacion": {
+            "type": "string",
+            "format": "date",
+            "nullable": true
+          },
+          "institucion": {
+            "type": "string",
+            "nullable": true,
+            "description": "Nombre de institución (SIC institucion.nombre normalizado)."
+          },
+          "maquinas_virtuales_desplegadas": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "activo": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "almacenamiento_usado": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "puntos_usados": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          }
+        }
+      },
+      "BackupEjecutivosRecord": {
+        "type": "object",
+        "properties": {
+          "fecha_activacion": {
+            "type": "string",
+            "format": "date"
+          },
+          "institucion": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "nombre": {
+                    "type": "string"
+                  }
+                }
+              }
+            ]
+          },
+          "activo": {
+            "oneOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "integer"
+              },
+              {
+                "type": "string"
+              }
+            ]
+          },
+          "capacidad_gb": {
+            "type": "string"
+          }
+        }
+      },
+      "MonitoreoEnlaceInfraestructurasRecord": {
+        "type": "object",
+        "properties": {
+          "fecha_activacion": {
+            "type": "string",
+            "format": "date"
+          },
+          "institucion": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "nombre": {
+                    "type": "string"
+                  }
+                }
+              }
+            ]
+          },
+          "activo": {
+            "oneOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "integer"
+              },
+              {
+                "type": "string"
+              }
+            ]
+          }
+        }
+      },
+      "GrabacionEventosRecord": {
+        "type": "object",
+        "properties": {
+          "fecha": {
+            "type": "string",
+            "format": "date"
+          },
+          "institucion": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "nombre": {
+                    "type": "string"
+                  }
+                }
+              }
+            ]
+          },
+          "cantidad_eventos": {
+            "oneOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "integer"
+              },
+              {
+                "type": "string"
+              }
+            ]
+          }
+        }
+      },
+      "RepositorioMultimediasRecord": {
+        "type": "object",
+        "properties": {
+          "fecha_activacion": {
+            "type": "string",
+            "format": "date"
+          },
+          "numero_videos": {
+            "oneOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "integer"
+              },
+              {
+                "type": "string"
+              }
+            ]
+          },
+          "institucion": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "nombre": {
+                    "type": "string"
+                  }
+                }
+              }
+            ]
+          },
+          "observaciones": {
+            "type": "string"
+          }
+        }
+      },
+      "ElsasRecord": {
+        "type": "object",
+        "properties": {
+          "tipo": {
+            "type": "string"
+          },
+          "dominio": {
+            "type": "string"
+          },
+          "fecha_expiracion": {
+            "type": "string",
+            "format": "date"
+          },
+          "limite_consultas": {
+            "type": "string"
+          },
+          "limite_almacenamiento": {
+            "oneOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "integer"
+              },
+              {
+                "type": "string"
+              }
+            ]
+          },
+          "report_url": {
+            "type": "string"
+          },
+          "prompt_url": {
+            "type": "string"
+          },
+          "institucion_id": {
+            "type": "string"
+          },
+          "permisos": {
+            "type": "string"
+          }
+        }
+      },
+      "MoodlesRecord": {
+        "type": "object",
+        "properties": {
+          "fecha_activacion": {
+            "type": "string",
+            "format": "date"
+          },
+          "gb_storage": {
+            "type": "string"
+          },
+          "gb_ram": {
+            "type": "string"
+          },
+          "nro_vcpu": {
+            "type": "string"
+          },
+          "nro_usuarios_nombrados": {
+            "type": "string"
+          },
+          "nro_usuarios_concurrentes": {
+            "type": "string"
+          },
+          "modo_saas": {
+            "type": "string"
+          },
+          "institucion": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "nombre": {
+                    "type": "string"
+                  }
+                }
+              }
+            ]
+          },
+          "audiencia": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          },
+          "estado": {
+            "type": "string"
+          },
+          "elsa_its": {
+            "type": "string"
+          },
+          "elsa_gml": {
+            "type": "string"
+          }
+        }
+      },
+      "MoocsFormacionContinuasRecord": {
+        "type": "object",
+        "properties": {
+          "fecha_publicacion": {
+            "type": "string",
+            "format": "date"
+          },
+          "institucion": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "nombre": {
+                    "type": "string"
+                  }
+                }
+              }
+            ]
+          },
+          "nombre_mooc": {
+            "type": "string"
+          },
+          "num_inscritos": {
+            "oneOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "integer"
+              },
+              {
+                "type": "string"
+              }
+            ]
+          }
+        }
+      },
+      "UdecidesRecord": {
+        "type": "object",
+        "properties": {
+          "fecha_activacion": {
+            "type": "string",
+            "format": "date"
+          },
+          "institucion": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "nombre": {
+                    "type": "string"
+                  }
+                }
+              }
+            ]
+          },
+          "numero_votantes_paquete": {
+            "oneOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "integer"
+              },
+              {
+                "type": "string"
+              }
+            ]
+          },
+          "numero_votantes_adicional": {
+            "oneOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "integer"
+              },
+              {
+                "type": "string"
+              }
+            ]
+          },
+          "tipo_eleccion": {
+            "type": "string"
+          }
+        }
+      },
+      "VenuesRecord": {
+        "type": "object",
+        "properties": {
+          "fecha_evento": {
+            "type": "string",
+            "format": "date"
+          },
+          "nombre_evento": {
+            "type": "string"
+          },
+          "observaciones": {
+            "type": "string"
+          },
+          "institucion": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "nombre": {
+                    "type": "string"
+                  }
+                }
+              }
+            ]
+          },
+          "numero_participantes": {
+            "oneOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "integer"
+              },
+              {
+                "type": "string"
+              }
+            ]
+          }
+        }
+      },
+      "Roa": {
+        "type": "object",
+        "required": [
+          "fecha_activacion",
+          "institucion"
+        ],
+        "properties": {
+          "fecha_activacion": {
+            "type": "string",
+            "format": "date",
+            "description": "Fecha de activación del servicio ROA."
+          },
+          "numero_de_objetos_apre": {
+            "type": "integer",
+            "description": "Número de objetos de aprendizaje."
+          },
+          "institucion": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "nombre": {
+                    "type": "string"
+                  }
+                }
+              }
+            ],
+            "description": "Institución; el ETL normaliza objeto.nombre a string."
+          }
+        }
+      },
+      "RraaeRawRecord": {
+        "type": "object",
+        "description": "Fila plana escrita en Bronze pending/raw.jsonl tras expandir facets.",
+        "required": [
+          "institucion_nombre",
+          "rraae_atributonombre",
+          "rraae_atributovalor"
+        ],
+        "properties": {
+          "institucion_nombre": {
+            "type": "string",
+            "description": "Nombre del facet institution (alias para lookup CMI)."
+          },
+          "rraae_atributonombre": {
+            "type": "string",
+            "description": "Código Solr format (p. ej. article, book). El process lo mapea a rraae_atributonom.",
+            "enum": [
+              "bachelorThesis",
+              "masterThesis",
+              "article",
+              "book",
+              "conferenceObject",
+              "doctoralThesis",
+              "other"
+            ]
+          },
+          "rraae_atributovalor": {
+            "type": "integer",
+            "description": "Conteo del facet format para esa institución."
+          }
+        }
+      },
+      "RraaeSilverRecord": {
+        "type": "object",
+        "description": "Proyección Silver dt_rraae_data (sin PK).",
+        "properties": {
+          "rraae_version": {
+            "type": "integer"
+          },
+          "rraae_datefrom": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "rraae_dateto": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "rraae_organization_id": {
+            "type": "string"
+          },
+          "rraae_atributonom": {
+            "type": "string",
+            "description": "Etiqueta ES (Tesis de grado, Artículo, …)."
+          },
+          "rraae_atributovalor": {
+            "type": "integer"
+          }
+        }
+      },
+      "RediStatisticsResponse": {
+        "type": "object",
+        "required": [
+          "@graph"
+        ],
+        "properties": {
+          "_id": {
+            "type": "string"
+          },
+          "@graph": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RediUniversityStat"
+            }
+          }
+        }
+      },
+      "RediUniversityStat": {
+        "type": "object",
+        "properties": {
+          "@id": {
+            "type": "string"
+          },
+          "uc:name": {
+            "type": "string",
+            "description": "Código universidad (lookup CMI). Ej. UG, ESPOL."
+          },
+          "uc:figure": {
+            "type": "object",
+            "properties": {
+              "@language": {
+                "type": "string"
+              },
+              "@value": {
+                "type": "string",
+                "description": "Nombre largo (auditoría)."
+              }
+            }
+          },
+          "uc:totalAuthors": {
+            "$ref": "#/components/schemas/JsonLdInteger"
+          },
+          "uc:totalPublications": {
+            "$ref": "#/components/schemas/JsonLdInteger"
+          }
+        }
+      },
+      "JsonLdInteger": {
+        "type": "object",
+        "properties": {
+          "@type": {
+            "type": "string"
+          },
+          "@value": {
+            "type": "string",
+            "description": "Entero como string JSON-LD."
+          }
+        }
+      },
+      "RediRawRecord": {
+        "type": "object",
+        "description": "Fila Bronze pending/raw.jsonl",
+        "required": [
+          "redi_universidad",
+          "redi_numautores",
+          "redi_numpublicaciones"
+        ],
+        "properties": {
+          "redi_universidad": {
+            "type": "string"
+          },
+          "redi_universidad_nombre": {
+            "type": "string"
+          },
+          "redi_numautores": {
+            "type": "integer"
+          },
+          "redi_numpublicaciones": {
+            "type": "integer"
+          }
+        }
+      },
+      "IesRecord": {
+        "type": "object",
+        "properties": {
+          "nombre": {
+            "type": "string"
+          },
+          "paquete_cedia": {
+            "type": "string"
+          },
+          "nombre_completo": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "activo": {
+            "oneOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "integer"
+              },
+              {
+                "type": "string"
+              }
+            ]
+          }
+        }
+      },
+      "CapacidadPaquetesRecord": {
+        "type": "object",
+        "properties": {
+          "servicio": {
+            "type": "string"
+          },
+          "paquete_institucion": {
+            "type": "string"
+          },
+          "capacidad": {
+            "type": "string"
+          },
+          "unidad": {
+            "type": "string"
+          },
+          "nombre_capacidad": {
+            "type": "string"
+          }
+        }
+      },
+      "CapacidadPaqueteCloudsRecord": {
+        "type": "object",
+        "properties": {
+          "servicio": {
+            "type": "string"
+          },
+          "paquete_institucione": {
+            "type": "string"
+          },
+          "CPU": {
+            "type": "string"
+          },
+          "RAM_GB": {
+            "type": "string"
+          },
+          "DISCO_GB": {
+            "type": "string"
+          },
+          "nombre_capacidad_cloud": {
+            "type": "string"
+          },
+          "Maquinas_virtuales": {
+            "oneOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "integer"
+              },
+              {
+                "type": "string"
+              }
+            ]
+          }
+        }
+      },
+      "PackagesElsaRecord": {
+        "type": "object",
+        "properties": {
+          "servicio": {
+            "type": "string"
+          },
+          "paquete_institucion": {
+            "type": "string"
+          },
+          "capacidad": {
+            "type": "string"
+          },
+          "unidad": {
+            "type": "string"
+          },
+          "nombre_capacidad": {
+            "type": "string"
+          }
+        }
+      },
+      "PackagesRedAvanzadaRecord": {
+        "type": "object",
+        "properties": {
+          "servicio": {
+            "type": "string"
+          },
+          "paquete_institucion": {
+            "type": "string"
+          },
+          "capacidad": {
+            "type": "string"
+          },
+          "unidad": {
+            "type": "string"
+          },
+          "nombre_capacidad": {
+            "type": "string"
+          }
+        }
+      },
+      "PackagesVideoconferenciaRecord": {
+        "type": "object",
+        "properties": {
+          "servicio": {
+            "type": "string"
+          },
+          "paquete_institucion": {
+            "type": "string"
+          },
+          "capacidad": {
+            "type": "string"
+          },
+          "unidad": {
+            "type": "string"
+          },
+          "nombre_capacidad": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "x-cedia-sources": [
+    {
+      "dag": "0_diagnostico_cti",
+      "fragment": "0_diagnostico_cti/diagnostico-asgs-open.json",
+      "path": "/diagnostico-asgs",
+      "silver_table": "dt_diagnostico_cti"
+    },
+    {
+      "dag": "1_0_red_avanzada_sedes",
+      "fragment": "1_0_red_avanzada_sedes/red-avanzadas-open.json",
+      "path": "/red-avanzadas",
+      "silver_table": "dt_red_avanzada"
+    },
+    {
+      "dag": "1_2_lan_extendida",
+      "fragment": "1_2_lan_extendida/lan-extendida-open.json",
+      "path": "/lan-extendidas",
+      "silver_table": "dt_lan_extendida_data"
+    },
+    {
+      "dag": "1_3_tuneles_datos",
+      "fragment": "1_3_tuneles_datos/tunel-datos-open.json",
+      "path": "/tunel-datos",
+      "silver_table": "dt_tuneles_datos_data"
+    },
+    {
+      "dag": "1_4_eduroam",
+      "fragment": "1_4_eduroam/eduroam-open.json",
+      "path": "/freeradius*/_search",
+      "silver_table": "dt_eduroam_data_raw"
+    },
+    {
+      "dag": "2_1_firewall_perimetral",
+      "fragment": "2_1_firewall_perimetral/firewall-perimetrals-open.json",
+      "path": "/firewall-perimetrals",
+      "silver_table": "dt_firewall_perimetral_data"
+    },
+    {
+      "dag": "2_2_waf_estado",
+      "fragment": "2_2_waf_estado/firewall-sitios-webs-open.json",
+      "path": "/firewall-sitios-webs",
+      "silver_table": "dt_waf_data"
+    },
+    {
+      "dag": "2_3_antiddos_activacion",
+      "fragment": "2_3_antiddos_activacion/proteccion-denegacion-servicios-open.json",
+      "path": "/proteccion-denegacion-servicios",
+      "silver_table": "dt_proteccion_denegacion_ser_data"
+    },
+    {
+      "dag": "2_4_antispam",
+      "fragment": "2_4_antispam/antispams-open.json",
+      "path": "/antispams",
+      "silver_table": "dt_antispam_data"
+    },
+    {
+      "dag": "2_5_dns_seguro_estatus",
+      "fragment": "2_5_dns_seguro_estatus/dns-seguro-statuses-open.json",
+      "path": "/dns-seguro-statuses",
+      "silver_table": "dt_dns_seguro_status"
+    },
+    {
+      "dag": "2_6_security_center",
+      "fragment": "2_6_security_center/security-centers-open.json",
+      "path": "/security-centers",
+      "silver_table": "dt_securitycenter_data"
+    },
+    {
+      "dag": "2_8_soc",
+      "fragment": "2_8_soc/servicios-soc-csirts-open.json",
+      "path": "/servicios-soc-csirts",
+      "silver_table": "dt_soc_sic_data"
+    },
+    {
+      "dag": "3_3_backup_servicio_estado",
+      "fragment": "3_3_backup_servicio_estado/backup-estado-open.json",
+      "path": "/backup-como-servicios",
+      "silver_table": "dt_baas_data"
+    },
+    {
+      "dag": "3_4_backup_ejecutivo",
+      "fragment": "3_4_backup_ejecutivo/backup-ejecutivos-open.json",
+      "path": "/backup-ejecutivos",
+      "silver_table": "dt_backup_ejec_data"
+    },
+    {
+      "dag": "3_8_monitoreo_enlace",
+      "fragment": "3_8_monitoreo_enlace/monitoreo-enlace-infraestructuras-open.json",
+      "path": "/monitoreo-enlace-infraestructuras",
+      "silver_table": "dt_monit_enlac_infra_data"
+    },
+    {
+      "dag": "4_2_grabacion_eventos",
+      "fragment": "4_2_grabacion_eventos/grabacion-eventos-open.json",
+      "path": "/grabacion-eventos",
+      "silver_table": "dt_grabacion_eventos_data"
+    },
+    {
+      "dag": "4_4_repositorio_conocimiento",
+      "fragment": "4_4_repositorio_conocimiento/repositorio-multimedias-open.json",
+      "path": "/repositorio-multimedias",
+      "silver_table": "dt_repo_multimedia_data"
+    },
+    {
+      "dag": "5_1_llm",
+      "fragment": "5_1_llm/elsas-open.json",
+      "path": "/elsas",
+      "silver_table": "dt_llm_data"
+    },
+    {
+      "dag": "5_1_moodle",
+      "fragment": "5_1_moodle/moodles-open.json",
+      "path": "/moodles",
+      "silver_table": "dt_moodle_data"
+    },
+    {
+      "dag": "5_2_plataforma_mooc",
+      "fragment": "5_2_plataforma_mooc/moocs-formacion-continuas-open.json",
+      "path": "/moocs-formacion-continuas",
+      "silver_table": "dt_mooc_data"
+    },
+    {
+      "dag": "5_5_udecide",
+      "fragment": "5_5_udecide/udecides-open.json",
+      "path": "/udecides",
+      "silver_table": "dt_udecide"
+    },
+    {
+      "dag": "5_6_venue",
+      "fragment": "5_6_venue/venues-open.json",
+      "path": "/venues",
+      "silver_table": "dt_venue_data"
+    },
+    {
+      "dag": "6_2_roa",
+      "fragment": "6_2_roa/roa-open.json",
+      "path": "/roas",
+      "silver_table": "dt_roa_data"
+    },
+    {
+      "dag": "6_3_rraae",
+      "fragment": "6_3_rraae/rraae-open.json",
+      "path": "/select",
+      "silver_table": "dt_rraae_data"
+    },
+    {
+      "dag": "6_4_redi",
+      "fragment": "6_4_redi/redi-open.json",
+      "path": "/nest/universities/statistics",
+      "silver_table": "dt_redi_data"
+    },
+    {
+      "dag": "organization_paquete",
+      "fragment": "organization_paquete/ies-open.json",
+      "path": "/ies",
+      "silver_table": "organization_packages"
+    },
+    {
+      "dag": "packages_backup_servicio",
+      "fragment": "packages_backup_servicio/capacidad-paquetes-open.json",
+      "path": "/capacidad-paquetes",
+      "silver_table": "packages_backup_service"
+    },
+    {
+      "dag": "packages_cloud",
+      "fragment": "packages_cloud/capacidad-paquete-clouds-open.json",
+      "path": "/capacidad-paquete-clouds",
+      "silver_table": "packages_cloud"
+    },
+    {
+      "dag": "packages_elsa",
+      "fragment": "packages_elsa/capacidad-paquetes-elsa-open.json",
+      "path": "/capacidad-paquetes-elsa",
+      "silver_table": "packages_elsa"
+    },
+    {
+      "dag": "packages_red_avanzada",
+      "fragment": "packages_red_avanzada/capacidad-paquetes-red-avanzada-open.json",
+      "path": "/capacidad-paquetes-red-avanzada",
+      "silver_table": "packages_red_avanzada"
+    },
+    {
+      "dag": "packages_videoconferencia",
+      "fragment": "packages_videoconferencia/capacidad-paquetes-videoconferencia-open.json",
+      "path": "/capacidad-paquetes-videoconferencia",
+      "silver_table": "packages_videoconferencia"
+    }
+  ]
+}
