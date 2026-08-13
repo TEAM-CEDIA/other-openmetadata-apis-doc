@@ -15,6 +15,7 @@ DOCUMENTATION_ROUTES = {
     "/redi-documentation": "redi.doc.json",
     "/freeradius-documentation": "freeradius.doc.json",
     "/nube-documentation": "nube.doc.json",
+    "/fondos-documentation": "fondos.doc.json",
 }
 
 
@@ -97,6 +98,14 @@ async def get_freeradius_documentation() -> FileResponse:
 )
 async def get_freeradius_documentation() -> FileResponse:
     return _serve_doc(DOCUMENTATION_ROUTES["/nube-documentation"])
+
+@app.get(
+    "/fondos-documentation",
+    response_class=FileResponse,
+    summary="Obtener la documentación de fondos.doc",
+)
+async def get_fondos_documentation() -> FileResponse:
+    return _serve_doc(DOCUMENTATION_ROUTES["/fondos-documentation"])
 
 if __name__ == "__main__":
     import uvicorn

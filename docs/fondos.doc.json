@@ -1,0 +1,219 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "FONDOS API — wsBecasFondosCMI (fragmento OpenMetadata)",
+    "description": "Único endpoint HTTP de becas/fondos CMI.\n\nTodos los DAGs 7.* hacen POST a este path; el discriminador es el body `Fondo` (Avante, Divulga, I+d+i, 1 A 1, Registra, Ponente).\n\nAuth: headers `Usr` / `UsrKey` (`FONDOS_USR`, `FONDOS_USR_KEY`). URL via `FONDOS_URL`.",
+    "version": "1.1.0",
+    "x-cedia-doc-kind": "fondos-openmetadata-fragment",
+    "x-cedia-loader-origin": "FONDOS",
+    "x-cedia-silver-table": "",
+    "x-cedia-real-path": "/produccion/dw/rest/wsBecasFondosCMI"
+  },
+  "servers": [
+    {
+      "url": "http://192.168.205.198",
+      "description": "API Fondos CMI (default FONDOS_URL host)"
+    }
+  ],
+  "tags": [
+    {
+      "name": "FONDOS",
+      "description": "API wsBecasFondosCMI — un endpoint, varios fondos vía body.Fondo."
+    }
+  ],
+  "paths": {
+    "/produccion/dw/rest/wsBecasFondosCMI": {
+      "post": {
+        "tags": ["FONDOS"],
+        "summary": "Consultar becas/proyectos por Periodo y Fondo",
+        "description": "Endpoint real compartido. Body: Periodo (año), Fondo (nombre del fondo), IES (opcional vacío). Respuesta: sdtBecasFondos[].",
+        "operationId": "postWsBecasFondosCMI",
+        "parameters": [
+          {
+            "name": "Usr",
+            "in": "header",
+            "required": true,
+            "schema": { "type": "string" },
+            "description": "Variable Airflow FONDOS_USR"
+          },
+          {
+            "name": "UsrKey",
+            "in": "header",
+            "required": true,
+            "schema": { "type": "string" },
+            "description": "Variable Airflow FONDOS_USR_KEY"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FondosBecasRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Payload con sdtBecasFondos",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FondosBecasResponse"
+                }
+              }
+            }
+          },
+          "401": { "description": "Credenciales inválidas" }
+        },
+        "x-cedia-real-path": "/produccion/dw/rest/wsBecasFondosCMI"
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "FondosBecasRequest": {
+        "type": "object",
+        "required": ["Periodo", "Fondo"],
+        "properties": {
+          "Periodo": {
+            "type": "string",
+            "description": "Año. Cada DAG itera años desde su Variable FONDOS_YEAR_*."
+          },
+          "Fondo": {
+            "type": "string",
+            "description": "Discriminador del fondo a consultar.",
+            "enum": [
+              "Avante",
+              "Divulga",
+              "I+d+i",
+              "1 A 1",
+              "Registra",
+              "Ponente"
+            ]
+          },
+          "IES": {
+            "type": "string",
+            "description": "Filtro IES opcional; los loaders envían vacío.",
+            "default": ""
+          }
+        }
+      },
+      "FondosBecasResponse": {
+        "type": "object",
+        "properties": {
+          "sdtBecasFondos": {
+            "type": "array",
+            "description": "Colección de proyectos/becas.",
+            "items": {
+              "$ref": "#/components/schemas/FondosBecasRecord"
+            }
+          }
+        }
+      },
+      "FondosBecasRecord": {
+        "type": "object",
+        "description": "Campos proyectados por los ETL desde cada ítem de sdtBecasFondos.",
+        "properties": {
+          "codigoproyecto": { "type": "string" },
+          "titulo": { "type": "string" },
+          "periodo": {
+            "oneOf": [{ "type": "integer" }, { "type": "string" }]
+          },
+          "mes": {
+            "oneOf": [
+              { "type": "integer" },
+              { "type": "string" },
+              { "type": "null" }
+            ]
+          },
+          "dia": {
+            "oneOf": [
+              { "type": "integer" },
+              { "type": "string" },
+              { "type": "null" }
+            ]
+          },
+          "fondo": { "type": "string" },
+          "estado": { "type": "string" },
+          "paprobado": {
+            "oneOf": [{ "type": "number" }, { "type": "string" }]
+          },
+          "pejecutado": {
+            "oneOf": [{ "type": "number" }, { "type": "string" }]
+          },
+          "pcontraparte": {
+            "oneOf": [{ "type": "number" }, { "type": "string" }]
+          },
+          "tadjudicado": {
+            "oneOf": [{ "type": "number" }, { "type": "string" }]
+          },
+          "congreso": { "type": "string" },
+          "observaciones": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "ies": { "type": "array", "items": { "type": "string" } },
+          "inventores": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": { "nombre": { "type": "string" } },
+              "additionalProperties": true
+            }
+          }
+        }
+      }
+    }
+  },
+  "x-cedia-path": "/produccion/dw/rest/wsBecasFondosCMI",
+  "x-cedia-loader-origin": "FONDOS",
+  "x-cedia-real-path": "/produccion/dw/rest/wsBecasFondosCMI",
+  "x-cedia-om-api-endpoint-fqn-hint": "FONDOS API.FONDOS./produccion/dw/rest/wsBecasFondosCMI/post",
+  "x-cedia-om-source-fqn": "FONDOS API.FONDOS./produccion/dw/rest/wsBecasFondosCMI/post",
+  "x-cedia-consumers": [
+    {
+      "dag": "7_1_fondo_avante",
+      "fondo": "Avante",
+      "year_var": "FONDOS_YEAR_AVANTE",
+      "silver_table": "dt_cecira_data",
+      "dest_fqn": "TIC CMI DB.CMI.cedia-ps.dt_cecira_data"
+    },
+    {
+      "dag": "7_2_fondo_divulga",
+      "fondo": "Divulga",
+      "year_var": "FONDOS_YEAR_DIVULGA",
+      "silver_table": "dt_divulgaciencia",
+      "dest_fqn": "TIC CMI DB.CMI.cedia-ps.dt_divulgaciencia"
+    },
+    {
+      "dag": "7_3_fondo_idi",
+      "fondo": "I+d+i",
+      "year_var": "FONDOS_YEAR_IDI",
+      "silver_table": "dt_cepra_data",
+      "dest_fqn": "TIC CMI DB.CMI.cedia-ps.dt_cepra_data"
+    },
+    {
+      "dag": "7_4_fondo_1a1",
+      "fondo": "1 A 1",
+      "year_var": "FONDOS_YEAR_1A1",
+      "silver_table": "dt_fondo_1a1",
+      "dest_fqn": "TIC CMI DB.CMI.cedia-ps.dt_fondo_1a1"
+    },
+    {
+      "dag": "7_5_fondo_registra",
+      "fondo": "Registra",
+      "year_var": "FONDOS_YEAR_REGISTRA",
+      "silver_table": "dt_fondo_registra",
+      "dest_fqn": "TIC CMI DB.CMI.cedia-ps.dt_fondo_registra"
+    },
+    {
+      "dag": "7_fondo_ponente",
+      "fondo": "Ponente",
+      "year_var": "FONDOS_YEAR_PONENTE",
+      "silver_table": "dt_conferencista_data",
+      "dest_fqn": "TIC CMI DB.CMI.cedia-ps.dt_conferencista_data"
+    }
+  ]
+}
