@@ -16,6 +16,8 @@ DOCUMENTATION_ROUTES = {
     "/freeradius-documentation": "freeradius.doc.json",
     "/nube-documentation": "nube.doc.json",
     "/fondos-documentation": "fondos.doc.json",
+    "/grafana-red-documentation": "grafana-red.doc.json",
+    "/ipman-documentation": "ipman.doc.json"
 }
 
 
@@ -106,6 +108,22 @@ async def get_freeradius_documentation() -> FileResponse:
 )
 async def get_fondos_documentation() -> FileResponse:
     return _serve_doc(DOCUMENTATION_ROUTES["/fondos-documentation"])
+
+@app.get(
+    "/grafana-red-documentation",
+    response_class=FileResponse,
+    summary="Obtener la documentación de grafana-red.doc",
+)
+async def get_grafana_red_documentation() -> FileResponse:
+    return _serve_doc(DOCUMENTATION_ROUTES["/grafana-red-documentation"])
+
+@app.get(
+    "/ipman-documentation",
+    response_class=FileResponse,
+    summary="Obtener la documentación de ipman.doc",
+)
+async def get_ipman_documentation() -> FileResponse:
+    return _serve_doc(DOCUMENTATION_ROUTES["/ipman-documentation"])
 
 if __name__ == "__main__":
     import uvicorn

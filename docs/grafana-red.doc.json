@@ -1,0 +1,243 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "GRAFANA API — CMI ETL (OpenMetadata)",
+    "description": "Contrato Grafana HTTP consumido por DAGs CMI (base `https://dashboard.cedia.org.ec`).\n\nAuth: Bearer `GRAFANA_API_KEY`.\n\nFQN punta de datos: `GRAFANA API.GRAFANA./api/ds/query/post`.\n\nRegenerar: `python grafana_doc_open/rebuild_grafana_doc_openmeta.py`.\n\nGenerado: 2026-08-14",
+    "version": "1.0.0",
+    "x-cedia-doc-kind": "grafana-openmetadata-aggregate",
+    "x-cedia-rebuild": "grafana_doc_open/rebuild_grafana_doc_openmeta.py",
+    "x-cedia-generated-at": "2026-08-14",
+    "x-cedia-loader-origin": "GRAFANA",
+    "x-cedia-om-source-fqn": "GRAFANA API.GRAFANA./api/ds/query/post"
+  },
+  "servers": [
+    {
+      "url": "https://dashboard.cedia.org.ec",
+      "description": "Grafana CEDIA (documentación / GRAFANA_HOST_URL)"
+    }
+  ],
+  "tags": [
+    {
+      "name": "GRAFANA",
+      "description": "API HTTP Grafana. DAG: 1_0_red_avanzada_raw."
+    }
+  ],
+  "paths": {
+    "/api/search": {
+      "get": {
+        "tags": [
+          "GRAFANA"
+        ],
+        "summary": "Listar dashboards",
+        "description": "Usado por `Grafana.get_all_dashboards()`.",
+        "operationId": "getGrafanaSearch",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de dashboards",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GrafanaSearchItem"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No autorizado"
+          }
+        },
+        "x-cedia-dag": "1_0_red_avanzada_raw"
+      }
+    },
+    "/api/dashboards/uid/{uid}": {
+      "get": {
+        "tags": [
+          "GRAFANA"
+        ],
+        "summary": "Detalle de dashboard por UID",
+        "description": "Usado por `Grafana.dashboards_information_by_id`.",
+        "operationId": "getGrafanaDashboardByUid",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "uid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Dashboard + meta",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GrafanaDashboardEnvelope"
+                }
+              }
+            }
+          }
+        },
+        "x-cedia-dag": "1_0_red_avanzada_raw"
+      }
+    },
+    "/api/library-elements/{uid}": {
+      "get": {
+        "tags": [
+          "GRAFANA"
+        ],
+        "summary": "Library panel por UID",
+        "description": "Usado cuando el panel referencia `libraryPanel.uid`.",
+        "operationId": "getGrafanaLibraryElement",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "uid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Library element",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              }
+            }
+          }
+        },
+        "x-cedia-dag": "1_0_red_avanzada_raw"
+      }
+    },
+    "/api/ds/query": {
+      "post": {
+        "tags": [
+          "GRAFANA"
+        ],
+        "summary": "Query datasource (series temporales)",
+        "description": "Punta principal de métricas. Usado por `Grafana.get_data_query_by_body` → filas Silver.",
+        "operationId": "postGrafanaDsQuery",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GrafanaDsQueryRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Frames/series",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GrafanaDsQueryResponse"
+                }
+              }
+            }
+          }
+        },
+        "x-cedia-dag": "1_0_red_avanzada_raw",
+        "x-cedia-silver-table": "dt_red_avanzada_raw"
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "API Key",
+        "description": "Variable Airflow GRAFANA_API_KEY"
+      }
+    },
+    "schemas": {
+      "GrafanaSearchItem": {
+        "type": "object",
+        "properties": {
+          "uid": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": true
+      },
+      "GrafanaDashboardEnvelope": {
+        "type": "object",
+        "properties": {
+          "dashboard": {
+            "type": "object",
+            "additionalProperties": true
+          },
+          "meta": {
+            "type": "object",
+            "additionalProperties": true
+          }
+        },
+        "additionalProperties": true
+      },
+      "GrafanaDsQueryRequest": {
+        "type": "object",
+        "description": "Body armado desde targets del panel + rango temporal GRAFANA_RANGE_*.",
+        "additionalProperties": true
+      },
+      "GrafanaDsQueryResponse": {
+        "type": "object",
+        "description": "Respuesta series; el ETL agrega max horario → dt_red_avanzada_raw.",
+        "additionalProperties": true
+      }
+    }
+  },
+  "x-cedia-sources": [
+    {
+      "dag": "1_0_red_avanzada_raw",
+      "fragment": "grafana_doc_open/grafana-open.json",
+      "path": "/api/ds/query",
+      "method": "post",
+      "silver_table": "dt_red_avanzada_raw",
+      "source_fqn": "GRAFANA API.GRAFANA./api/ds/query/post",
+      "dest_fqn": "TIC CMI DB.CMI.cedia-ps.dt_red_avanzada_raw"
+    }
+  ],
+  "x-cedia-om-source-fqn": "GRAFANA API.GRAFANA./api/ds/query/post"
+}

@@ -1,0 +1,113 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "IPMAN API — CMI ETL (OpenMetadata)",
+    "description": "Contrato IPMAN HTTP consumido por DAGs CMI (base `https://192.168.200.161`).\n\nVariable: `IPMAN_URL` (GET `/apicustom/subnets`).\n\nFQN punta de datos: `IPMAN API.IPMAN./apicustom/subnets/get`.\n\nRegenerar: `python ipman_doc_open/rebuild_ipman_doc_openmeta.py`.\n\nGenerado: 2026-08-14",
+    "version": "1.0.0",
+    "x-cedia-doc-kind": "ipman-openmetadata-aggregate",
+    "x-cedia-rebuild": "ipman_doc_open/rebuild_ipman_doc_openmeta.py",
+    "x-cedia-generated-at": "2026-08-14",
+    "x-cedia-loader-origin": "IPMAN",
+    "x-cedia-om-source-fqn": "IPMAN API.IPMAN./apicustom/subnets/get"
+  },
+  "servers": [
+    {
+      "url": "https://192.168.200.161",
+      "description": "IPMAN (documentación / IPMAN_URL)"
+    }
+  ],
+  "tags": [
+    {
+      "name": "IPMAN",
+      "description": "API HTTP IPMAN (subnets IPv4/IPv6). DAG: 1_1_aprovisionamiento_bloques."
+    }
+  ],
+  "paths": {
+    "/apicustom/subnets": {
+      "get": {
+        "tags": [
+          "IPMAN"
+        ],
+        "summary": "Listar instituciones y subnets aprovisionados",
+        "description": "Usado por `Ipman.get_aprov()`. TLS verify=False en el cliente Airflow. Sin auth HTTP documentada (headers vacíos).",
+        "operationId": "getIpmanSubnets",
+        "responses": {
+          "200": {
+            "description": "Envelope con lista `data` de instituciones y CIDR",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IpmanSubnetsEnvelope"
+                }
+              }
+            }
+          }
+        },
+        "x-cedia-dag": "1_1_aprovisionamiento_bloques",
+        "x-cedia-source-file": "ipman_doc_open/ipman-open.json",
+        "x-cedia-silver-table": "dt_bloques_aprov_details"
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "IpmanSubnetsEnvelope": {
+        "type": "object",
+        "required": [
+          "data"
+        ],
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IpmanInstitutionSubnets"
+            }
+          }
+        },
+        "additionalProperties": true
+      },
+      "IpmanInstitutionSubnets": {
+        "type": "object",
+        "description": "Registro IPMAN: nombre de institución + lista de subnets. El ETL explota cada CIDR a una fila Silver.",
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true,
+            "description": "Alias de institución para lookup CMI (OrganizationTypeEntity / organizaciones_alias)."
+          },
+          "subnets": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IpmanSubnet"
+            }
+          }
+        },
+        "additionalProperties": true
+      },
+      "IpmanSubnet": {
+        "type": "object",
+        "properties": {
+          "cidr": {
+            "type": "string",
+            "description": "Bloque CIDR. El ETL parte por `/` → aprov_ip + aprov_prefix_length.",
+            "example": "200.0.0.0/24"
+          }
+        },
+        "additionalProperties": true
+      }
+    }
+  },
+  "x-cedia-sources": [
+    {
+      "dag": "1_1_aprovisionamiento_bloques",
+      "fragment": "ipman_doc_open/ipman-open.json",
+      "path": "/apicustom/subnets",
+      "method": "get",
+      "silver_table": "dt_bloques_aprov_details",
+      "source_fqn": "IPMAN API.IPMAN./apicustom/subnets/get",
+      "dest_fqn": "TIC CMI DB.CMI.cedia-ps.dt_bloques_aprov_details"
+    }
+  ],
+  "x-cedia-om-source-fqn": "IPMAN API.IPMAN./apicustom/subnets/get",
+  "x-cedia-om-dest-fqn": "TIC CMI DB.CMI.cedia-ps.dt_bloques_aprov_details"
+}
