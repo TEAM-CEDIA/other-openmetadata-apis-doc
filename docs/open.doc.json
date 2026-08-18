@@ -2,7 +2,7 @@
   "openapi": "3.0.3",
   "info": {
     "title": "SIC API — CMI ETL (OpenMetadata)",
-    "description": "Contrato consolidado de los recursos SIC consumidos por los DAGs Airflow del repositorio CMI.\n\nCada ETL con origen SIC mantiene un fragmento `*-open.json` en su carpeta; este documento se regenera con `sic_doc_open/rebuild_sic_doc_openmeta.py` para servir un único OpenAPI a OpenMetadata.\n\nLos esquemas documentan únicamente los campos proyectados por cada loader (no el payload completo de SIC).\n\nGenerado: 2026-08-13\n\nDAGs incluidos:\n- `0_diagnostico_cti` → `/diagnostico-asgs`\n- `1_0_red_avanzada_sedes` → `/red-avanzadas`\n- `1_2_lan_extendida` → `/lan-extendidas`\n- `1_3_tuneles_datos` → `/tunel-datos`\n- `2_1_firewall_perimetral` → `/firewall-perimetrals`\n- `2_2_waf_estado` → `/firewall-sitios-webs`\n- `2_3_antiddos_activacion` → `/proteccion-denegacion-servicios`\n- `2_4_antispam` → `/antispams`\n- `2_5_dns_seguro_estatus` → `/dns-seguro-statuses`\n- `2_6_security_center` → `/security-centers`\n- `2_8_soc` → `/servicios-soc-csirts`\n- `3_3_backup_servicio_estado` → `/backup-como-servicios`\n- `3_4_backup_ejecutivo` → `/backup-ejecutivos`\n- `3_8_monitoreo_enlace` → `/monitoreo-enlace-infraestructuras`\n- `4_2_grabacion_eventos` → `/grabacion-eventos`\n- `4_4_repositorio_conocimiento` → `/repositorio-multimedias`\n- `5_1_llm` → `/elsas`\n- `5_1_moodle` → `/moodles`\n- `5_2_plataforma_mooc` → `/moocs-formacion-continuas`\n- `5_5_udecide` → `/udecides`\n- `5_6_venue` → `/venues`\n- `6_2_roa` → `/roas`\n- `organization_paquete` → `/ies`\n- `packages_backup_servicio` → `/capacidad-paquetes`\n- `packages_cloud` → `/capacidad-paquete-clouds`\n- `packages_elsa` → `/capacidad-paquetes-elsa`\n- `packages_red_avanzada` → `/capacidad-paquetes-red-avanzada`\n- `packages_videoconferencia` → `/capacidad-paquetes-videoconferencia`",
+    "description": "Contrato consolidado de los recursos SIC consumidos por los DAGs Airflow del repositorio CMI.\n\nCada ETL con origen SIC mantiene un fragmento `*-open.json` en su carpeta; este documento se regenera con `sic_doc_open/rebuild_sic_doc_openmeta.py` para servir un único OpenAPI a OpenMetadata.\n\nLos esquemas documentan únicamente los campos proyectados por cada loader (no el payload completo de SIC).\n\nGenerado: 2026-08-18\n\nDAGs incluidos:\n- `0_diagnostico_cti` → `/diagnostico-asgs`\n- `1_0_red_avanzada_sedes` → `/red-avanzadas`\n- `1_2_lan_extendida` → `/lan-extendidas`\n- `1_3_tuneles_datos` → `/tunel-datos`\n- `2_1_firewall_perimetral` → `/firewall-perimetrals`\n- `2_2_waf_estado` → `/firewall-sitios-webs`\n- `2_3_antiddos_activacion` → `/proteccion-denegacion-servicios`\n- `2_4_antispam` → `/antispams`\n- `2_5_dns_seguro_estatus` → `/dns-seguro-statuses`\n- `2_6_security_center` → `/security-centers`\n- `2_8_soc` → `/servicios-soc-csirts`\n- `3_3_backup_servicio_estado` → `/backup-como-servicios`\n- `3_4_backup_ejecutivo` → `/backup-ejecutivos`\n- `3_6_helpdesk` → `/helpdesks`\n- `3_8_monitoreo_enlace` → `/monitoreo-enlace-infraestructuras`\n- `4_2_grabacion_eventos` → `/grabacion-eventos`\n- `4_4_repositorio_conocimiento` → `/repositorio-multimedias`\n- `5_1_llm` → `/elsas`\n- `5_1_moodle` → `/moodles`\n- `5_2_plataforma_mooc` → `/moocs-formacion-continuas`\n- `5_5_udecide` → `/udecides`\n- `5_6_venue` → `/venues`\n- `6_2_roa` → `/roas`\n- `organization_paquete` → `/ies`\n- `packages_backup_servicio` → `/capacidad-paquetes`\n- `packages_cloud` → `/capacidad-paquete-clouds`\n- `packages_elsa` → `/capacidad-paquetes-elsa`\n- `packages_red_avanzada` → `/capacidad-paquetes-red-avanzada`\n- `packages_videoconferencia` → `/capacidad-paquetes-videoconferencia`",
     "version": "1.0.0",
     "contact": {
       "name": "Equipo de datos CMI",
@@ -10,7 +10,7 @@
     },
     "x-cedia-doc-kind": "sic-openmetadata-aggregate",
     "x-cedia-rebuild": "sic_doc_open/rebuild_sic_doc_openmeta.py",
-    "x-cedia-generated-at": "2026-08-13"
+    "x-cedia-generated-at": "2026-08-18"
   },
   "servers": [
     {
@@ -74,6 +74,10 @@
     {
       "name": "BACKUP-EJECUTIVO",
       "description": "Recurso SIC `backup-ejecutivos`. DAG: 3_4_backup_ejecutivo."
+    },
+    {
+      "name": "HELPDESK",
+      "description": "Helpdesk SIC (activaciones por IES). DAG: 3_6_helpdesk."
     },
     {
       "name": "MONITOREO-ENLACE",
@@ -187,6 +191,7 @@
           "2_8_soc",
           "3_3_backup_servicio_estado",
           "3_4_backup_ejecutivo",
+          "3_6_helpdesk",
           "3_8_monitoreo_enlace",
           "4_2_grabacion_eventos",
           "4_4_repositorio_conocimiento",
@@ -840,6 +845,55 @@
         "x-cedia-dag": "3_4_backup_ejecutivo",
         "x-cedia-source-file": "3_4_backup_ejecutivo/backup-ejecutivos-open.json",
         "x-cedia-silver-table": "dt_backup_ejec_data"
+      }
+    },
+    "/helpdesks": {
+      "get": {
+        "tags": [
+          "HELPDESK"
+        ],
+        "summary": "Obtener registros Helpdesk",
+        "description": "Consulta utilizada por el ETL. El loader conserva únicamente fecha_activacion, institucion y activo. SIC puede entregar institucion como objeto; el process normaliza a nombre (string).",
+        "operationId": "getHelpdesks",
+        "parameters": [
+          {
+            "name": "_limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 100000,
+              "minimum": 1
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Listado Helpdesk con los campos consumidos por el ETL.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Helpdesk"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No autenticado"
+          }
+        },
+        "x-cedia-dag": "3_6_helpdesk",
+        "x-cedia-source-file": "3_6_helpdesk/helpdesk-open.json",
+        "x-cedia-silver-table": "dt_helpdesk_data"
       }
     },
     "/monitoreo-enlace-infraestructuras": {
@@ -2215,6 +2269,40 @@
           }
         }
       },
+      "Helpdesk": {
+        "type": "object",
+        "required": [
+          "fecha_activacion",
+          "institucion"
+        ],
+        "properties": {
+          "fecha_activacion": {
+            "type": "string",
+            "format": "date",
+            "description": "Fecha de activación del servicio Helpdesk."
+          },
+          "institucion": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "nombre": {
+                    "type": "string"
+                  }
+                }
+              }
+            ],
+            "description": "Institución; el ETL normaliza objeto.nombre a string."
+          },
+          "activo": {
+            "type": "boolean",
+            "description": "Indica si el servicio está activo."
+          }
+        }
+      },
       "MonitoreoEnlaceInfraestructurasRecord": {
         "type": "object",
         "properties": {
@@ -2825,6 +2913,12 @@
       "fragment": "3_4_backup_ejecutivo/backup-ejecutivos-open.json",
       "path": "/backup-ejecutivos",
       "silver_table": "dt_backup_ejec_data"
+    },
+    {
+      "dag": "3_6_helpdesk",
+      "fragment": "3_6_helpdesk/helpdesk-open.json",
+      "path": "/helpdesks",
+      "silver_table": "dt_helpdesk_data"
     },
     {
       "dag": "3_8_monitoreo_enlace",
