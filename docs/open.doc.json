@@ -2,7 +2,7 @@
   "openapi": "3.0.3",
   "info": {
     "title": "SIC API — CMI ETL (OpenMetadata)",
-    "description": "Contrato consolidado de los recursos SIC consumidos por los DAGs Airflow del repositorio CMI.\n\nCada ETL con origen SIC mantiene un fragmento `*-open.json` en su carpeta; este documento se regenera con `sic_doc_open/rebuild_sic_doc_openmeta.py` para servir un único OpenAPI a OpenMetadata.\n\nLos esquemas documentan únicamente los campos proyectados por cada loader (no el payload completo de SIC).\n\nGenerado: 2026-08-18\n\nDAGs incluidos:\n- `0_diagnostico_cti` → `/diagnostico-asgs`\n- `1_0_red_avanzada_sedes` → `/red-avanzadas`\n- `1_2_lan_extendida` → `/lan-extendidas`\n- `1_3_tuneles_datos` → `/tunel-datos`\n- `2_1_firewall_perimetral` → `/firewall-perimetrals`\n- `2_2_waf_estado` → `/firewall-sitios-webs`\n- `2_3_antiddos_activacion` → `/proteccion-denegacion-servicios`\n- `2_4_antispam` → `/antispams`\n- `2_5_dns_seguro_estatus` → `/dns-seguro-statuses`\n- `2_6_security_center` → `/security-centers`\n- `2_8_soc` → `/servicios-soc-csirts`\n- `3_3_backup_servicio_estado` → `/backup-como-servicios`\n- `3_4_backup_ejecutivo` → `/backup-ejecutivos`\n- `3_6_helpdesk` → `/helpdesks`\n- `3_8_monitoreo_enlace` → `/monitoreo-enlace-infraestructuras`\n- `4_2_grabacion_eventos` → `/grabacion-eventos`\n- `4_4_repositorio_conocimiento` → `/repositorio-multimedias`\n- `5_1_llm` → `/elsas`\n- `5_1_moodle` → `/moodles`\n- `5_2_plataforma_mooc` → `/moocs-formacion-continuas`\n- `5_5_udecide` → `/udecides`\n- `5_6_venue` → `/venues`\n- `6_2_roa` → `/roas`\n- `organization_paquete` → `/ies`\n- `packages_backup_servicio` → `/capacidad-paquetes`\n- `packages_cloud` → `/capacidad-paquete-clouds`\n- `packages_elsa` → `/capacidad-paquetes-elsa`\n- `packages_red_avanzada` → `/capacidad-paquetes-red-avanzada`\n- `packages_videoconferencia` → `/capacidad-paquetes-videoconferencia`",
+    "description": "Contrato consolidado de los recursos SIC consumidos por los DAGs Airflow del repositorio CMI.\n\nCada ETL con origen SIC mantiene un fragmento `*-open.json` en su carpeta; este documento se regenera con `sic_doc_open/rebuild_sic_doc_openmeta.py` para servir un único OpenAPI a OpenMetadata.\n\nLos esquemas documentan únicamente los campos proyectados por cada loader (no el payload completo de SIC).\n\nGenerado: 2026-08-26\n\nDAGs incluidos:\n- `0_diagnostico_cti` → `/diagnostico-asgs`\n- `14_3_difusion_conv_hori_eu` → `/difucion-de-convocatorias-fondo-horizonte-europas`\n- `1_0_red_avanzada_sedes` → `/red-avanzadas`\n- `1_2_lan_extendida` → `/lan-extendidas`\n- `1_3_tuneles_datos` → `/tunel-datos`\n- `2_1_firewall_perimetral` → `/firewall-perimetrals`\n- `2_2_waf_estado` → `/firewall-sitios-webs`\n- `2_3_antiddos_activacion` → `/proteccion-denegacion-servicios`\n- `2_4_antispam` → `/antispams`\n- `2_5_dns_seguro_estatus` → `/dns-seguro-statuses`\n- `2_6_security_center` → `/security-centers`\n- `2_8_soc` → `/servicios-soc-csirts`\n- `2_honey` → `/hony-pots`\n- `3_3_backup_servicio_estado` → `/backup-como-servicios`\n- `3_4_backup_ejecutivo` → `/backup-ejecutivos`\n- `3_6_helpdesk` → `/helpdesks`\n- `3_8_monitoreo_enlace` → `/monitoreo-enlace-infraestructuras`\n- `4_2_grabacion_eventos` → `/grabacion-eventos`\n- `4_4_repositorio_conocimiento` → `/repositorio-multimedias`\n- `5_1_llm` → `/elsas`\n- `5_1_moodle` → `/moodles`\n- `5_2_plataforma_mooc` → `/moocs-formacion-continuas`\n- `5_5_udecide` → `/udecides`\n- `5_6_venue` → `/venues`\n- `6_2_roa` → `/roas`\n- `6_eagora` → `/repositorio-academicas`\n- `organization_paquete` → `/ies`\n- `packages_backup_servicio` → `/capacidad-paquetes`\n- `packages_cloud` → `/capacidad-paquete-clouds`\n- `packages_elsa` → `/capacidad-paquetes-elsa`\n- `packages_red_avanzada` → `/capacidad-paquetes-red-avanzada`\n- `packages_videoconferencia` → `/capacidad-paquetes-videoconferencia`",
     "version": "1.0.0",
     "contact": {
       "name": "Equipo de datos CMI",
@@ -10,7 +10,7 @@
     },
     "x-cedia-doc-kind": "sic-openmetadata-aggregate",
     "x-cedia-rebuild": "sic_doc_open/rebuild_sic_doc_openmeta.py",
-    "x-cedia-generated-at": "2026-08-18"
+    "x-cedia-generated-at": "2026-08-26"
   },
   "servers": [
     {
@@ -26,6 +26,10 @@
     {
       "name": "DIAGNOSTICO-CTI",
       "description": "Recurso SIC `diagnostico-asgs`. DAG: 0_diagnostico_cti."
+    },
+    {
+      "name": "DIFUSION-CONV-HORI-EU",
+      "description": "Difusión convocatorias Horizon Europe. DAG: 14_3_difusion_conv_hori_eu."
     },
     {
       "name": "RED-AVANZADA-SEDES",
@@ -66,6 +70,10 @@
     {
       "name": "SOC",
       "description": "Recurso SIC `servicios-soc-csirts`. DAG: 2_8_soc."
+    },
+    {
+      "name": "HONEY",
+      "description": "Honeypots. DAG: 2_honey."
     },
     {
       "name": "BACKUP-SERVICIO-ESTADO",
@@ -114,6 +122,10 @@
     {
       "name": "ROA",
       "description": "Repositorio de Objetos de Aprendizaje (ROA). DAG: 6_2_roa."
+    },
+    {
+      "name": "EAGORA",
+      "description": "eÁgora / Bases de datos digitales. DAG: 6_eagora."
     },
     {
       "name": "ORGANIZATION-PAQUETE",
@@ -179,6 +191,7 @@
         },
         "x-cedia-dags": [
           "0_diagnostico_cti",
+          "14_3_difusion_conv_hori_eu",
           "1_0_red_avanzada_sedes",
           "1_2_lan_extendida",
           "1_3_tuneles_datos",
@@ -189,6 +202,7 @@
           "2_5_dns_seguro_estatus",
           "2_6_security_center",
           "2_8_soc",
+          "2_honey",
           "3_3_backup_servicio_estado",
           "3_4_backup_ejecutivo",
           "3_6_helpdesk",
@@ -201,6 +215,7 @@
           "5_5_udecide",
           "5_6_venue",
           "6_2_roa",
+          "6_eagora",
           "organization_paquete",
           "packages_backup_servicio",
           "packages_cloud",
@@ -257,6 +272,55 @@
         "x-cedia-dag": "0_diagnostico_cti",
         "x-cedia-source-file": "0_diagnostico_cti/diagnostico-asgs-open.json",
         "x-cedia-silver-table": "dt_diagnostico_cti"
+      }
+    },
+    "/difucion-de-convocatorias-fondo-horizonte-europas": {
+      "get": {
+        "tags": [
+          "DIFUSION-CONV-HORI-EU"
+        ],
+        "summary": "Obtener registros de difusión de convocatorias Horizon Europe",
+        "description": "Consulta utilizada por el ETL. El loader conserva feche_registro, fecha_registro, institucion, detalle, observaciones y numero_participantes. SIC puede entregar institucion como objeto; el process normaliza a nombre (string).",
+        "operationId": "getDifucionConvocatoriasFondoHorizonteEuropas",
+        "parameters": [
+          {
+            "name": "_limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 100000,
+              "minimum": 1
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Listado con los campos consumidos por el ETL.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DifusionConvHoriEu"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No autenticado"
+          }
+        },
+        "x-cedia-dag": "14_3_difusion_conv_hori_eu",
+        "x-cedia-source-file": "14_3_difusion_conv_hori_eu/difusion-conv-hori-eu-open.json",
+        "x-cedia-silver-table": "dt_difusion_hor_eu"
       }
     },
     "/red-avanzadas": {
@@ -747,6 +811,55 @@
         "x-cedia-dag": "2_8_soc",
         "x-cedia-source-file": "2_8_soc/servicios-soc-csirts-open.json",
         "x-cedia-silver-table": "dt_soc_sic_data"
+      }
+    },
+    "/hony-pots": {
+      "get": {
+        "tags": [
+          "HONEY"
+        ],
+        "summary": "Obtener registros honeypots",
+        "description": "Consulta utilizada por el ETL. El loader conserva fecha_activacion, institucion y estado. SIC puede entregar institucion como objeto; el process normaliza a nombre (string).",
+        "operationId": "getHonyPots",
+        "parameters": [
+          {
+            "name": "_limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 100000,
+              "minimum": 1
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Listado con los campos consumidos por el ETL.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Honeypot"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No autenticado"
+          }
+        },
+        "x-cedia-dag": "2_honey",
+        "x-cedia-source-file": "2_honey/honey-open.json",
+        "x-cedia-silver-table": "dt_honeypots_data"
       }
     },
     "/backup-como-servicios": {
@@ -1337,6 +1450,55 @@
         "x-cedia-silver-table": "dt_roa_data"
       }
     },
+    "/repositorio-academicas": {
+      "get": {
+        "tags": [
+          "EAGORA"
+        ],
+        "summary": "Obtener registros eÁgora / repositorio académicas",
+        "description": "Consulta utilizada por el ETL. El loader conserva fecha_inicio, institucion, recurso, fecha_fin y fecha_activacion. SIC puede entregar institucion como objeto; el process normaliza a nombre (string).",
+        "operationId": "getRepositorioAcademicas",
+        "parameters": [
+          {
+            "name": "_limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 100000,
+              "minimum": 1
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Listado con los campos consumidos por el ETL.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Eagora"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No autenticado"
+          }
+        },
+        "x-cedia-dag": "6_eagora",
+        "x-cedia-source-file": "6_eagora/eagora-open.json",
+        "x-cedia-silver-table": "dt_base_datos_digitales"
+      }
+    },
     "/ies": {
       "get": {
         "tags": [
@@ -1728,6 +1890,52 @@
           },
           "Descripcion": {
             "type": "string"
+          }
+        }
+      },
+      "DifusionConvHoriEu": {
+        "type": "object",
+        "required": [
+          "institucion"
+        ],
+        "properties": {
+          "feche_registro": {
+            "type": "string",
+            "format": "date",
+            "description": "Fecha de registro con typo histórico del JSON SIC. El ETL deriva difusion_eu_anio, difusion_eu_mes y difusion_eu_dia."
+          },
+          "fecha_registro": {
+            "type": "string",
+            "format": "date",
+            "description": "Fallback si SIC entrega la clave correcta; misma semántica que feche_registro."
+          },
+          "institucion": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "nombre": {
+                    "type": "string"
+                  }
+                }
+              }
+            ],
+            "description": "Institución; el ETL normaliza objeto.nombre a string."
+          },
+          "detalle": {
+            "type": "string",
+            "description": "Detalle de la difusión; Silver difusion_eu_detalle (máx. 2000)."
+          },
+          "observaciones": {
+            "type": "string",
+            "description": "Observaciones SIC; Silver difusion_eu_observaciones (máx. 2550)."
+          },
+          "numero_participantes": {
+            "type": "integer",
+            "description": "Número de participantes; Silver difusion_eu_numero_participantes."
           }
         }
       },
@@ -2190,6 +2398,39 @@
                 "type": "string"
               }
             ]
+          }
+        }
+      },
+      "Honeypot": {
+        "type": "object",
+        "required": [
+          "institucion"
+        ],
+        "properties": {
+          "fecha_activacion": {
+            "type": "string",
+            "format": "date",
+            "description": "Fecha de activación; el ETL deriva honeypots_anio, honeypots_mes y honeypots_dia."
+          },
+          "institucion": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "nombre": {
+                    "type": "string"
+                  }
+                }
+              }
+            ],
+            "description": "Institución; el ETL normaliza objeto.nombre a string."
+          },
+          "estado": {
+            "type": "boolean",
+            "description": "Estado del honeypot; Silver almacena tinyint 0/1."
           }
         }
       },
@@ -2687,6 +2928,50 @@
           }
         }
       },
+      "Eagora": {
+        "type": "object",
+        "required": [
+          "institucion",
+          "recurso"
+        ],
+        "properties": {
+          "fecha_inicio": {
+            "type": "string",
+            "format": "date",
+            "description": "Fecha de inicio del recurso."
+          },
+          "institucion": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "nombre": {
+                    "type": "string"
+                  }
+                }
+              }
+            ],
+            "description": "Institución; el ETL normaliza objeto.nombre a string."
+          },
+          "recurso": {
+            "type": "string",
+            "description": "Nombre del recurso / base de datos digital."
+          },
+          "fecha_fin": {
+            "type": "string",
+            "format": "date",
+            "description": "Fecha de fin del recurso."
+          },
+          "fecha_activacion": {
+            "type": "string",
+            "format": "date",
+            "description": "Fecha de activación; el ETL deriva badi_anio y badi_mes."
+          }
+        }
+      },
       "IesRecord": {
         "type": "object",
         "properties": {
@@ -2843,6 +3128,12 @@
       "silver_table": "dt_diagnostico_cti"
     },
     {
+      "dag": "14_3_difusion_conv_hori_eu",
+      "fragment": "14_3_difusion_conv_hori_eu/difusion-conv-hori-eu-open.json",
+      "path": "/difucion-de-convocatorias-fondo-horizonte-europas",
+      "silver_table": "dt_difusion_hor_eu"
+    },
+    {
       "dag": "1_0_red_avanzada_sedes",
       "fragment": "1_0_red_avanzada_sedes/red-avanzadas-open.json",
       "path": "/red-avanzadas",
@@ -2901,6 +3192,12 @@
       "fragment": "2_8_soc/servicios-soc-csirts-open.json",
       "path": "/servicios-soc-csirts",
       "silver_table": "dt_soc_sic_data"
+    },
+    {
+      "dag": "2_honey",
+      "fragment": "2_honey/honey-open.json",
+      "path": "/hony-pots",
+      "silver_table": "dt_honeypots_data"
     },
     {
       "dag": "3_3_backup_servicio_estado",
@@ -2973,6 +3270,12 @@
       "fragment": "6_2_roa/roa-open.json",
       "path": "/roas",
       "silver_table": "dt_roa_data"
+    },
+    {
+      "dag": "6_eagora",
+      "fragment": "6_eagora/eagora-open.json",
+      "path": "/repositorio-academicas",
+      "silver_table": "dt_base_datos_digitales"
     },
     {
       "dag": "organization_paquete",
