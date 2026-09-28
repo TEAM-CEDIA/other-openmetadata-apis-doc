@@ -17,7 +17,8 @@ DOCUMENTATION_ROUTES = {
     "/nube-documentation": "nube.doc.json",
     "/fondos-documentation": "fondos.doc.json",
     "/grafana-red-documentation": "grafana-red.doc.json",
-    "/ipman-documentation": "ipman.doc.json"
+    "/ipman-documentation": "ipman.doc.json",
+    "/zoom-documentation": "zoom.doc.json"
 }
 
 
@@ -124,6 +125,14 @@ async def get_grafana_red_documentation() -> FileResponse:
 )
 async def get_ipman_documentation() -> FileResponse:
     return _serve_doc(DOCUMENTATION_ROUTES["/ipman-documentation"])
+
+@app.get(
+    "/zoom-documentation",
+    response_class=FileResponse,
+    summary="Obtener la documentación de zoom.doc",
+)
+async def get_zoom_documentation() -> FileResponse:
+    return _serve_doc(DOCUMENTATION_ROUTES["/zoom-documentation"])
 
 if __name__ == "__main__":
     import uvicorn

@@ -1,0 +1,222 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "ZOOM API — CMI ETL (OpenMetadata)",
+    "description": "Contrato Zoom REST consumido por DAGs CMI (base `https://api.zoom.us/v2`).\n\nAuth: OAuth account credentials y Bearer.\n\nFQN grupos: `ZOOM API.ZOOM./groups/get`.\n\nRegenerar: `python zoom_doc_open/rebuild_zoom_doc_openmeta.py`.\n\nGenerado: 2026-09-28",
+    "version": "1.0.0",
+    "x-cedia-doc-kind": "zoom-openmetadata-aggregate",
+    "x-cedia-rebuild": "zoom_doc_open/rebuild_zoom_doc_openmeta.py",
+    "x-cedia-generated-at": "2026-09-28",
+    "x-cedia-loader-origin": "ZOOM",
+    "x-cedia-om-source-fqn": "ZOOM API.ZOOM./groups/get"
+  },
+  "servers": [
+    {
+      "url": "https://api.zoom.us/v2",
+      "description": "Zoom REST (ZOOM_URL_BASE)"
+    }
+  ],
+  "tags": [
+    {
+      "name": "ZOOM",
+      "description": "API HTTP Zoom. DAGs: 4_1_zoom_groups, 4_2_webinar."
+    }
+  ],
+  "paths": {
+    "/groups": {
+      "get": {
+        "tags": [
+          "ZOOM"
+        ],
+        "summary": "Listar grupos Zoom",
+        "description": "Punta de `4_1_zoom_groups`. Cada grupo aporta `id`, `name` y `total_members` hacia Silver `dt_videoconf_members`.",
+        "operationId": "getZoomGroups",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Grupos de la cuenta",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ZoomGroupsResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token vencido o no autorizado"
+          }
+        },
+        "x-cedia-dag": "4_1_zoom_groups",
+        "x-cedia-path": "/groups",
+        "x-cedia-silver-table": "dt_videoconf_members",
+        "x-cedia-om-source-fqn": "ZOOM API.ZOOM./groups/get"
+      }
+    },
+    "/report/users/{userId}/meetings": {
+      "get": {
+        "tags": [
+          "ZOOM"
+        ],
+        "summary": "Reuniones de un usuario en un rango",
+        "description": "Punta de `4_2_webinar`. Ventanas de máximo un mes.",
+        "operationId": "getZoomUserMeetingsReport",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Email o id de usuario Zoom"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Meetings del usuario",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token vencido o no autorizado"
+          }
+        },
+        "x-cedia-dag": "4_2_webinar",
+        "x-cedia-path": "/report/users/{userId}/meetings",
+        "x-cedia-om-source-fqn": "ZOOM API.ZOOM./report/users/{userId}/meetings/get"
+      }
+    },
+    "/webinars/{webinarId}": {
+      "get": {
+        "tags": [
+          "ZOOM"
+        ],
+        "summary": "Detalle de un webinar",
+        "description": "Punta de `4_2_webinar` para `settings.alternative_hosts`.",
+        "operationId": "getZoomWebinar",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "webinarId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Webinar",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token vencido o no autorizado"
+          },
+          "404": {
+            "description": "No es un webinar"
+          }
+        },
+        "x-cedia-dag": "4_2_webinar",
+        "x-cedia-path": "/webinars/{webinarId}",
+        "x-cedia-om-source-fqn": "ZOOM API.ZOOM./webinars/{webinarId}/get"
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "description": "Access token OAuth de la cuenta Zoom"
+      }
+    },
+    "schemas": {
+      "ZoomGroup": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "id_group en Silver"
+          },
+          "name": {
+            "type": "string",
+            "description": "Nombre del grupo. El alias de institución es el primer segmento antes de _."
+          },
+          "total_members": {
+            "type": "integer",
+            "description": "Columna members en Silver"
+          }
+        }
+      },
+      "ZoomGroupsResponse": {
+        "type": "object",
+        "properties": {
+          "total_records": {
+            "type": "integer"
+          },
+          "groups": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ZoomGroup"
+            }
+          }
+        }
+      }
+    }
+  },
+  "x-cedia-sources": [
+    {
+      "dag": "4_1_zoom_groups",
+      "fragment": "zoom_doc_open/zoom-open.json",
+      "path": "/groups",
+      "method": "get",
+      "silver_table": "dt_videoconf_members",
+      "source_fqn": "ZOOM API.ZOOM./groups/get"
+    },
+    {
+      "dag": "4_2_webinar",
+      "fragment": "zoom_doc_open/zoom-open.json",
+      "path": "/report/users/{userId}/meetings",
+      "method": "get",
+      "silver_table": "",
+      "source_fqn": "ZOOM API.ZOOM./report/users/{userId}/meetings/get"
+    },
+    {
+      "dag": "4_2_webinar",
+      "fragment": "zoom_doc_open/zoom-open.json",
+      "path": "/webinars/{webinarId}",
+      "method": "get",
+      "silver_table": "",
+      "source_fqn": "ZOOM API.ZOOM./webinars/{webinarId}/get"
+    }
+  ],
+  "x-cedia-om-source-fqn": "ZOOM API.ZOOM./groups/get"
+}
