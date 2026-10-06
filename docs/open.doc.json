@@ -2,7 +2,7 @@
   "openapi": "3.0.3",
   "info": {
     "title": "SIC API — CMI ETL (OpenMetadata)",
-    "description": "Contrato consolidado de los recursos SIC consumidos por los DAGs Airflow del repositorio CMI.\n\nCada ETL con origen SIC mantiene un fragmento `*-open.json` en su carpeta; este documento se regenera con `sic_doc_open/rebuild_sic_doc_openmeta.py` para servir un único OpenAPI a OpenMetadata.\n\nLos esquemas documentan únicamente los campos proyectados por cada loader (no el payload completo de SIC).\n\nGenerado: 2026-08-26\n\nDAGs incluidos:\n- `0_diagnostico_cti` → `/diagnostico-asgs`\n- `14_3_difusion_conv_hori_eu` → `/difucion-de-convocatorias-fondo-horizonte-europas`\n- `1_0_red_avanzada_sedes` → `/red-avanzadas`\n- `1_2_lan_extendida` → `/lan-extendidas`\n- `1_3_tuneles_datos` → `/tunel-datos`\n- `2_1_firewall_perimetral` → `/firewall-perimetrals`\n- `2_2_waf_estado` → `/firewall-sitios-webs`\n- `2_3_antiddos_activacion` → `/proteccion-denegacion-servicios`\n- `2_4_antispam` → `/antispams`\n- `2_5_dns_seguro_estatus` → `/dns-seguro-statuses`\n- `2_6_security_center` → `/security-centers`\n- `2_8_soc` → `/servicios-soc-csirts`\n- `2_honey` → `/hony-pots`\n- `3_3_backup_servicio_estado` → `/backup-como-servicios`\n- `3_4_backup_ejecutivo` → `/backup-ejecutivos`\n- `3_6_helpdesk` → `/helpdesks`\n- `3_8_monitoreo_enlace` → `/monitoreo-enlace-infraestructuras`\n- `4_2_grabacion_eventos` → `/grabacion-eventos`\n- `4_4_repositorio_conocimiento` → `/repositorio-multimedias`\n- `5_1_llm` → `/elsas`\n- `5_1_moodle` → `/moodles`\n- `5_2_plataforma_mooc` → `/moocs-formacion-continuas`\n- `5_5_udecide` → `/udecides`\n- `5_6_venue` → `/venues`\n- `6_2_roa` → `/roas`\n- `6_eagora` → `/repositorio-academicas`\n- `organization_paquete` → `/ies`\n- `packages_backup_servicio` → `/capacidad-paquetes`\n- `packages_cloud` → `/capacidad-paquete-clouds`\n- `packages_elsa` → `/capacidad-paquetes-elsa`\n- `packages_red_avanzada` → `/capacidad-paquetes-red-avanzada`\n- `packages_videoconferencia` → `/capacidad-paquetes-videoconferencia`",
+    "description": "Contrato consolidado de los recursos SIC consumidos por los DAGs Airflow del repositorio CMI.\n\nCada ETL con origen SIC mantiene un fragmento `*-open.json` en su carpeta; este documento se regenera con `sic_doc_open/rebuild_sic_doc_openmeta.py` para servir un único OpenAPI a OpenMetadata.\n\nLos esquemas documentan únicamente los campos proyectados por cada loader (no el payload completo de SIC).\n\nGenerado: 2026-10-05\n\nDAGs incluidos:\n- `0_diagnostico_cti` → `/diagnostico-asgs`\n- `13_1_viajes_inmersivos` → `/viajes-inmersivos`\n- `13_2_foros_rectores` → `/eventos-rectores-y-vicerrectores`\n- `13_3_material_estudio` → `/material-de-estudio-y-consultas`\n- `13_4_uso_salas` → `/uso-salas-quito-cuencas`\n- `14_3_difusion_conv_hori_eu` → `/difucion-de-convocatorias-fondo-horizonte-europas`\n- `1_0_red_avanzada_sedes` → `/red-avanzadas`\n- `1_1_aprovisionamiento_bloques_estado` → `/bloque-ipv-6-s`\n- `1_2_lan_extendida` → `/lan-extendidas`\n- `1_3_tuneles_datos` → `/tunel-datos`\n- `2_1_firewall_perimetral` → `/firewall-perimetrals`\n- `2_2_waf_estado` → `/firewall-sitios-webs`\n- `2_3_antiddos_activacion` → `/proteccion-denegacion-servicios`\n- `2_4_antispam` → `/antispams`\n- `2_5_dns_seguro_estatus` → `/dns-seguro-statuses`\n- `2_6_security_center` → `/security-centers`\n- `2_8_soc` → `/servicios-soc-csirts`\n- `2_honey` → `/hony-pots`\n- `3_3_backup_servicio_estado` → `/backup-como-servicios`\n- `3_4_backup_ejecutivo` → `/backup-ejecutivos`\n- `3_6_helpdesk` → `/helpdesks`\n- `3_8_monitoreo_enlace` → `/monitoreo-enlace-infraestructuras`\n- `4_2_grabacion_eventos` → `/grabacion-eventos`\n- `4_4_repositorio_conocimiento` → `/repositorio-multimedias`\n- `5_1_llm` → `/elsas`\n- `5_1_moodle` → `/moodles`\n- `5_2_plataforma_mooc` → `/moocs-formacion-continuas`\n- `5_5_udecide` → `/udecides`\n- `5_6_venue` → `/venues`\n- `6_2_roa` → `/roas`\n- `6_eagora` → `/repositorio-academicas`\n- `organization_paquete` → `/ies`\n- `packages_backup_servicio` → `/capacidad-paquetes`\n- `packages_cloud` → `/capacidad-paquete-clouds`\n- `packages_elsa` → `/capacidad-paquetes-elsa`\n- `packages_red_avanzada` → `/capacidad-paquetes-red-avanzada`\n- `packages_videoconferencia` → `/capacidad-paquetes-videoconferencia`",
     "version": "1.0.0",
     "contact": {
       "name": "Equipo de datos CMI",
@@ -10,7 +10,7 @@
     },
     "x-cedia-doc-kind": "sic-openmetadata-aggregate",
     "x-cedia-rebuild": "sic_doc_open/rebuild_sic_doc_openmeta.py",
-    "x-cedia-generated-at": "2026-08-26"
+    "x-cedia-generated-at": "2026-10-05"
   },
   "servers": [
     {
@@ -28,12 +28,32 @@
       "description": "Recurso SIC `diagnostico-asgs`. DAG: 0_diagnostico_cti."
     },
     {
+      "name": "VIAJES-INMERSIVOS",
+      "description": "Viajes inmersivos. DAG: 13_1_viajes_inmersivos."
+    },
+    {
+      "name": "FOROS-RECTORES",
+      "description": "Foros de rectores y vicerrectores. DAG: 13_2_foros_rectores."
+    },
+    {
+      "name": "MATERIAL-ESTUDIO",
+      "description": "Material de estudio y consulta. DAG: 13_3_material_estudio."
+    },
+    {
+      "name": "USO-SALAS",
+      "description": "Uso de salas en Quito y Cuenca. DAG: 13_4_uso_salas."
+    },
+    {
       "name": "DIFUSION-CONV-HORI-EU",
       "description": "Difusión convocatorias Horizon Europe. DAG: 14_3_difusion_conv_hori_eu."
     },
     {
       "name": "RED-AVANZADA-SEDES",
       "description": "Recurso SIC `red-avanzadas`. DAG: 1_0_red_avanzada_sedes."
+    },
+    {
+      "name": "APROVISIONAMIENTO-BLOQUES-ESTADO",
+      "description": "Asignación de bloques IPv4/IPv6. DAG: 1_1_aprovisionamiento_bloques_estado."
     },
     {
       "name": "LAN-EXTENDIDA",
@@ -191,8 +211,13 @@
         },
         "x-cedia-dags": [
           "0_diagnostico_cti",
+          "13_1_viajes_inmersivos",
+          "13_2_foros_rectores",
+          "13_3_material_estudio",
+          "13_4_uso_salas",
           "14_3_difusion_conv_hori_eu",
           "1_0_red_avanzada_sedes",
+          "1_1_aprovisionamiento_bloques_estado",
           "1_2_lan_extendida",
           "1_3_tuneles_datos",
           "2_1_firewall_perimetral",
@@ -272,6 +297,202 @@
         "x-cedia-dag": "0_diagnostico_cti",
         "x-cedia-source-file": "0_diagnostico_cti/diagnostico-asgs-open.json",
         "x-cedia-silver-table": "dt_diagnostico_cti"
+      }
+    },
+    "/viajes-inmersivos": {
+      "get": {
+        "tags": [
+          "VIAJES-INMERSIVOS"
+        ],
+        "summary": "Obtener registros de viajes inmersivos",
+        "description": "Consulta utilizada por el ETL. El loader conserva feche_registro, fecha_registro, institucion, detalle, observaciones y numero_participantes. SIC puede entregar institucion como objeto; el process normaliza a nombre (string).",
+        "operationId": "getViajesInmersivos",
+        "parameters": [
+          {
+            "name": "_limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 100000,
+              "minimum": 1
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Listado con los campos consumidos por el ETL.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ViajesInmersivos"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No autenticado"
+          }
+        },
+        "x-cedia-dag": "13_1_viajes_inmersivos",
+        "x-cedia-source-file": "13_1_viajes_inmersivos/viajes-inmersivos-open.json",
+        "x-cedia-silver-table": "dt_viajes_inmersivos"
+      }
+    },
+    "/eventos-rectores-y-vicerrectores": {
+      "get": {
+        "tags": [
+          "FOROS-RECTORES"
+        ],
+        "summary": "Obtener registros de eventos de rectores y vicerrectores",
+        "description": "Consulta utilizada por el ETL. El loader conserva fecha, institucion, nombre_evento y numero_participantes. SIC puede entregar institucion como objeto; el cliente SIC y el process normalizan a nombre (string).",
+        "operationId": "getEventosRectoresYVicerrectores",
+        "parameters": [
+          {
+            "name": "_limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 100000,
+              "minimum": 1
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Listado con los campos consumidos por el ETL.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EventosRectoresVice"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No autenticado"
+          }
+        },
+        "x-cedia-dag": "13_2_foros_rectores",
+        "x-cedia-source-file": "13_2_foros_rectores/foros-rectores-open.json",
+        "x-cedia-silver-table": "dt_event_rect_vic_data"
+      }
+    },
+    "/material-de-estudio-y-consultas": {
+      "get": {
+        "tags": [
+          "MATERIAL-ESTUDIO"
+        ],
+        "summary": "Obtener registros de material de estudio y consulta",
+        "description": "Consulta utilizada por el ETL. El loader conserva feche_registro, fecha_registro, institucion, detalle, observaciones y numero_participantes. SIC puede entregar institucion como objeto; el process normaliza a nombre (string).",
+        "operationId": "getMaterialDeEstudioYConsultas",
+        "parameters": [
+          {
+            "name": "_limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 100000,
+              "minimum": 1
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Listado con los campos consumidos por el ETL.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MaterialEstudioConsulta"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No autenticado"
+          }
+        },
+        "x-cedia-dag": "13_3_material_estudio",
+        "x-cedia-source-file": "13_3_material_estudio/material-estudio-open.json",
+        "x-cedia-silver-table": "dt_mat_consulta"
+      }
+    },
+    "/uso-salas-quito-cuencas": {
+      "get": {
+        "tags": [
+          "USO-SALAS"
+        ],
+        "summary": "Obtener registros de uso de salas en Quito y Cuenca",
+        "description": "Consulta utilizada por el ETL. El loader conserva fecha_evento, institucion, nombre_evento, Ubicacion/ubicacion y observaciones. SIC puede entregar institucion como objeto; el cliente SIC y el process normalizan a nombre (string).",
+        "operationId": "getUsoSalasQuitoCuencas",
+        "parameters": [
+          {
+            "name": "_limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 100000,
+              "minimum": 1
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Listado con los campos consumidos por el ETL.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UsoSalasQuitoCuenca"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No autenticado"
+          }
+        },
+        "x-cedia-dag": "13_4_uso_salas",
+        "x-cedia-source-file": "13_4_uso_salas/uso-salas-open.json",
+        "x-cedia-silver-table": "dt_uso_salas_qc"
       }
     },
     "/difucion-de-convocatorias-fondo-horizonte-europas": {
@@ -370,6 +591,55 @@
         "x-cedia-dag": "1_0_red_avanzada_sedes",
         "x-cedia-source-file": "1_0_red_avanzada_sedes/red-avanzadas-open.json",
         "x-cedia-silver-table": "dt_red_avanzada"
+      }
+    },
+    "/bloque-ipv-6-s": {
+      "get": {
+        "tags": [
+          "APROVISIONAMIENTO-BLOQUES-ESTADO"
+        ],
+        "summary": "Obtener registros de bloques IPv4/IPv6",
+        "description": "Consulta utilizada por el ETL. El loader conserva fecha_activacion, institucion, descripcion, activado y detalle_bloque. SIC puede entregar institucion como objeto; el cliente SIC y el process normalizan a nombre (string).",
+        "operationId": "getBloquesIpv4Ipv6",
+        "parameters": [
+          {
+            "name": "_limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 100000,
+              "minimum": 1
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Listado con los campos consumidos por el ETL.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BloqueIpv4Ipv6"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No autenticado"
+          }
+        },
+        "x-cedia-dag": "1_1_aprovisionamiento_bloques_estado",
+        "x-cedia-source-file": "1_1_aprovisionamiento_bloques_estado/bloques-ipv4-6-open.json",
+        "x-cedia-silver-table": "dt_bloques_ipv4_6_data"
       }
     },
     "/lan-extendidas": {
@@ -1893,6 +2163,180 @@
           }
         }
       },
+      "ViajesInmersivos": {
+        "type": "object",
+        "required": [
+          "institucion"
+        ],
+        "properties": {
+          "feche_registro": {
+            "type": "string",
+            "format": "date",
+            "description": "Fecha de registro con typo histórico del JSON SIC. El ETL deriva viajes_anio, viajes_mes y viajes_dia."
+          },
+          "fecha_registro": {
+            "type": "string",
+            "format": "date",
+            "description": "Fallback si SIC entrega la clave correcta; misma semántica que feche_registro."
+          },
+          "institucion": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "nombre": {
+                    "type": "string"
+                  }
+                }
+              }
+            ],
+            "description": "Institución; el ETL normaliza objeto.nombre a string."
+          },
+          "detalle": {
+            "type": "string",
+            "description": "Detalle del viaje; Silver viajes_detalle (máx. 1000)."
+          },
+          "observaciones": {
+            "type": "string",
+            "description": "Observaciones SIC; Silver viajes_observaciones (máx. 1000)."
+          },
+          "numero_participantes": {
+            "type": "integer",
+            "description": "Número de participantes; Silver viajes_numero_participantes."
+          }
+        }
+      },
+      "EventosRectoresVice": {
+        "type": "object",
+        "required": [
+          "institucion"
+        ],
+        "properties": {
+          "fecha": {
+            "type": "string",
+            "format": "date",
+            "description": "Fecha del evento. El KTR la nombra fecha_activacion. El ETL deriva event_rector_vice_anio, event_rector_vice_mes y event_rector_vice_dia."
+          },
+          "institucion": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "nombre": {
+                    "type": "string"
+                  }
+                }
+              }
+            ],
+            "description": "Institución; el ETL normaliza objeto.nombre a string."
+          },
+          "nombre_evento": {
+            "type": "string",
+            "description": "Nombre del evento; Silver event_rector_vice_nombre_evento (máx. 1024) y key del Dimension Lookup."
+          },
+          "numero_participantes": {
+            "type": "integer",
+            "description": "Número de participantes; Silver event_rector_vice_numero_participantes."
+          }
+        }
+      },
+      "MaterialEstudioConsulta": {
+        "type": "object",
+        "required": [
+          "institucion"
+        ],
+        "properties": {
+          "feche_registro": {
+            "type": "string",
+            "format": "date",
+            "description": "Fecha de registro con typo histórico del JSON SIC. El ETL deriva mat_con_anio, mat_con_mes y mat_con_dia."
+          },
+          "fecha_registro": {
+            "type": "string",
+            "format": "date",
+            "description": "Fallback si SIC entrega la clave correcta; misma semántica que feche_registro."
+          },
+          "institucion": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "nombre": {
+                    "type": "string"
+                  }
+                }
+              }
+            ],
+            "description": "Institución; el ETL normaliza objeto.nombre a string."
+          },
+          "detalle": {
+            "type": "string",
+            "description": "Detalle; Silver mat_con_detalle (máx. 1000)."
+          },
+          "observaciones": {
+            "type": "string",
+            "description": "Observaciones SIC; Silver mat_con_observaciones (máx. 1000)."
+          },
+          "numero_participantes": {
+            "type": "number",
+            "description": "Número de participantes; Silver mat_con_numero_participantes (double)."
+          }
+        }
+      },
+      "UsoSalasQuitoCuenca": {
+        "type": "object",
+        "required": [
+          "institucion"
+        ],
+        "properties": {
+          "fecha_evento": {
+            "type": "string",
+            "format": "date",
+            "description": "Fecha del evento. El ETL deriva dt_uso_salas_qc_anio, dt_uso_salas_qc_mes y dt_uso_salas_qc_dia."
+          },
+          "institucion": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "nombre": {
+                    "type": "string"
+                  }
+                }
+              }
+            ],
+            "description": "Institución; el ETL normaliza objeto.nombre a string."
+          },
+          "nombre_evento": {
+            "type": "string",
+            "description": "Nombre del evento; Silver dt_uso_salas_qc_evento (máx. 1024) y key del Dimension Lookup."
+          },
+          "Ubicacion": {
+            "type": "string",
+            "description": "Path JSON del KTR ($..Ubicacion). Silver dt_uso_salas_qc_ubicacion (máx. 255). El loader también acepta ubicacion."
+          },
+          "ubicacion": {
+            "type": "string",
+            "description": "Alias en minúsculas del campo Ubicacion, por si SIC lo entrega así."
+          },
+          "observaciones": {
+            "type": "string",
+            "description": "Observaciones; Silver dt_uso_salas_qc_observaciones (máx. 2048)."
+          }
+        }
+      },
       "DifusionConvHoriEu": {
         "type": "object",
         "required": [
@@ -2012,6 +2456,47 @@
           },
           "longitud": {
             "type": "string"
+          }
+        }
+      },
+      "BloqueIpv4Ipv6": {
+        "type": "object",
+        "required": [
+          "institucion"
+        ],
+        "properties": {
+          "fecha_activacion": {
+            "type": "string",
+            "format": "date",
+            "description": "Fecha de activación. El ETL deriva bloques_ipv4_6_anio, bloques_ipv4_6_mes y bloques_ipv4_6_dia."
+          },
+          "institucion": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "nombre": {
+                    "type": "string"
+                  }
+                }
+              }
+            ],
+            "description": "Institución; el ETL normaliza objeto.nombre a string."
+          },
+          "descripcion": {
+            "type": "string",
+            "description": "Descripción del bloque; Silver bloques_ipv4_6_descripcion (máx. 2048) y key del Dimension Lookup."
+          },
+          "activado": {
+            "type": "boolean",
+            "description": "Estado de activación; Silver bloques_ipv4_6_activado (tinyint 0/1)."
+          },
+          "detalle_bloque": {
+            "type": "string",
+            "description": "Detalle del bloque; Silver bloques_ipv4_6_detalle_bloque (máx. 12048)."
           }
         }
       },
@@ -3128,6 +3613,30 @@
       "silver_table": "dt_diagnostico_cti"
     },
     {
+      "dag": "13_1_viajes_inmersivos",
+      "fragment": "13_1_viajes_inmersivos/viajes-inmersivos-open.json",
+      "path": "/viajes-inmersivos",
+      "silver_table": "dt_viajes_inmersivos"
+    },
+    {
+      "dag": "13_2_foros_rectores",
+      "fragment": "13_2_foros_rectores/foros-rectores-open.json",
+      "path": "/eventos-rectores-y-vicerrectores",
+      "silver_table": "dt_event_rect_vic_data"
+    },
+    {
+      "dag": "13_3_material_estudio",
+      "fragment": "13_3_material_estudio/material-estudio-open.json",
+      "path": "/material-de-estudio-y-consultas",
+      "silver_table": "dt_mat_consulta"
+    },
+    {
+      "dag": "13_4_uso_salas",
+      "fragment": "13_4_uso_salas/uso-salas-open.json",
+      "path": "/uso-salas-quito-cuencas",
+      "silver_table": "dt_uso_salas_qc"
+    },
+    {
       "dag": "14_3_difusion_conv_hori_eu",
       "fragment": "14_3_difusion_conv_hori_eu/difusion-conv-hori-eu-open.json",
       "path": "/difucion-de-convocatorias-fondo-horizonte-europas",
@@ -3138,6 +3647,12 @@
       "fragment": "1_0_red_avanzada_sedes/red-avanzadas-open.json",
       "path": "/red-avanzadas",
       "silver_table": "dt_red_avanzada"
+    },
+    {
+      "dag": "1_1_aprovisionamiento_bloques_estado",
+      "fragment": "1_1_aprovisionamiento_bloques_estado/bloques-ipv4-6-open.json",
+      "path": "/bloque-ipv-6-s",
+      "silver_table": "dt_bloques_ipv4_6_data"
     },
     {
       "dag": "1_2_lan_extendida",
